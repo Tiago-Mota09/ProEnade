@@ -32,8 +32,4 @@
     <PackageReference Include="swashbuckle.aspnetcore" Version="5.0.0-rc4" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Domain\Models\Request\" />
-  </ItemGroup>
-
 </Project>

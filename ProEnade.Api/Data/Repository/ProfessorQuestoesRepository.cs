@@ -15,10 +15,10 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"insert into professor_aluno 
-                            (id_professor,
-                             id_aluno)
-		                  values (@IdProfessor, @IdAluno) returning id_professor_questoes";
+            var query = @"insert into professorQuestoes 
+                            (idProfessor,
+                             idQuestao)
+		                  values (@IdProfessor, @IdQuestao) returning idProfessorQuestoes";
 
             return db.ExecuteScalar<int>(query, new
             {
@@ -30,10 +30,10 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"UPDATE Professor_Questoes
-                            SET id_professor = @IdProfessor,
-                                id_aluno = @IdQuestoes
-                          WHERE id_professor_Questoes = @IdProfessorQuestoes AND status = 1;";
+            var query = @"UPDATE ProfessorQuestoes
+                            SET idProfessor = @IdProfessor,
+                                idQuestoes = @IdQuestoes
+                          WHERE idProfessorQuestoes = @IdProfessorQuestoes AND status = 1;";
 
             return db.Execute(query, new
             {
@@ -74,13 +74,13 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"SELECT  pa.id_professor_aluno,
-                                  al.id_aluno, 
-		                          al.nome nome_aluno
-	                        FROM professor_aluno pa
-		                          INNER join aluno al
-			                        ON pa.id_aluno = al.id_aluno
-	                        WHERE pa.id_professor = @idProfessor AND pa.status = 1";
+            var query = @"SELECT  pq.id_professorQuestoes,
+                                  q.idQuestoes, 
+		                          q.nomeQuestoes
+	                        FROM professorQuestoes pq
+		                          INNER join questoes q
+			                        ON pq.idQuestoes = q.idQuestoes
+	                        WHERE pa.idProfessor = @idProfessor AND pq.status = 1";
 
             return db.Query<ProfessorQuestoesEntity>(query, new { idProfessor });
         }
@@ -89,13 +89,13 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"SELECT  pa.id_professor_aluno,
-                                  al.id_aluno, 
-		                          al.nome nome_aluno
-	                        FROM professor_aluno pa
-		                          INNER join aluno al
-			                        ON pa.id_aluno = al.id_aluno
-	                        WHERE pa.id_professor_questoes = @idProfessorQuestoes AND pa.status = 1";
+            var query = @"SELECT  pq.id_professorQuestoes,
+                                  q.idQuestoes, 
+		                          q.nomeQuestoes
+	                        FROM professorQuestoes pq
+		                          INNER join Questoes q
+			                        ON pq.idQuestoes = q.idQuestoes
+	                        WHERE pq.idProfessorQuestoes = @idProfessorQuestoes AND pq.status = 1";
 
             return db.QueryFirstOrDefault<ProfessorQuestoesEntity>(query, new { idProfessorQuestoes });
         }
@@ -105,8 +105,8 @@ namespace ProEnade.API.Data.Repositories
             using var db = Connection;
 
             var query = @"Select status 
-                               FROM professor_questoes
-                          WHERE id_professor_questoes = @idProfessorQuestoes";
+                               FROM professorQuestoes
+                          WHERE idProfessorQuestoes = @idProfessorQuestoes";
 
             return db.ExecuteScalar<int>(query, new { idProfessorQuestoes });
         }
@@ -141,9 +141,9 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"UPDATE Professor_Questoes
+            var query = @"UPDATE ProfessorQuestoes
                         SET status = 2
-                      WHERE id_professor_Questoes = @id";
+                      WHERE idProfessorQuestoes= @id";
 
             return db.Execute(query, new { id });
         }
