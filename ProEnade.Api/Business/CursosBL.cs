@@ -73,7 +73,7 @@ namespace ProEnade.API.Business
             }
             else
             {
-                throw new Exception("Erro ao excluir o aluno, contate o administrador");
+                throw new Exception("Erro ao excluir o curso, contate o administrador");
             }
         }
 
