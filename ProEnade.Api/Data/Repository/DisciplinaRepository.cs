@@ -24,7 +24,8 @@ namespace ProEnade.API.Data.Repositories
                              status)
                             values( 
                             @NomeDisciplina, 
-                            @IdDisciplina)
+                            @IdDisciplina,
+                            @Status)
                             RETURNING idDisciplina;";
 
             return db.ExecuteScalar<int>(query, new
@@ -99,7 +100,7 @@ namespace ProEnade.API.Data.Repositories
             return db.Query<DisciplinaEntity>(query);
         }
 
-        public int GetDisciplinaIdByNome(string nome)
+        public int GetDisciplinaIdByNome(string nomeDisciplina)
         {
             using var db = Connection;
 
@@ -108,7 +109,7 @@ namespace ProEnade.API.Data.Repositories
                           WHERE nomeDisciplina = @NomeDisciplina
                             AND status = 1; ";
 
-            return db.ExecuteScalar<int>(query, new { nome });
+            return db.ExecuteScalar<int>(query, new { nomeDisciplina });
         }
         public int Delete(int id)
         {

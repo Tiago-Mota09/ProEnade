@@ -6,7 +6,6 @@ using ProEnade.API.Data.Repositories;
 using ProEnade.API.Domain.Models.Request;
 using ProEnade.API.Data.Entities;
 using ProEnade.API.Domain.Models.Response;
-using ProEnade.API.Data.Repositories;
 
 namespace ProEnade.API.Business
 {
