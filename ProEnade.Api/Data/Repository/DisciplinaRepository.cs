@@ -101,9 +101,12 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"SELECT idDisciplina
+
+            var query = @"SELECT iddisciplina
                             FROM disciplina
-                          WHERE nomeDisciplina = @NomeDisciplina
+                          WHERE nomedisciplina = @NomeDisciplina
+
+
                             AND status = 1; ";
 
             return db.ExecuteScalar<int>(query, new { nomeDisciplina });
