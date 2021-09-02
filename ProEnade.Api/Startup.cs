@@ -1,4 +1,5 @@
 using AutoMapper;
+using Catel.Data;
 using Dapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -16,11 +17,6 @@ using Newtonsoft.Json;
 using ProEnade.API.Business;
 using ProEnade.API.Data.Repositories;
 using Serilog;
-using Signa.Library.Core;
-using Signa.Library.Core.Aspnet.Filters;
-using Signa.Library.Core.Aspnet.Filters.ErrorHandlings;
-using Signa.Library.Core.Aspnet.Helpers;
-using Signa.Library.Core.Data.Repository;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,7 +29,7 @@ namespace ProEnade.API
   public class Startup
   {
     public IConfiguration Configuration { get; }
-    private readonly StartupValidator _startupValidator;
+    //private readonly StartupValidator _startupValidator;
     private string ApplicationBasePath { get; }
     private string ApplicationName { get; }
 
@@ -44,8 +40,8 @@ namespace ProEnade.API
       Configuration = configuration;
       ApplicationBasePath = env.ContentRootPath;
       ApplicationName = env.ApplicationName;
-      Global.ConnectionString = Configuration["DATABASE_CONNECTION"];
-      _startupValidator = new StartupValidator();
+      //Global.ConnectionString = Configuration["DATABASE_CONNECTION"];
+      //_startupValidator = new StartupValidator();
     }
 
     // This method gets called by the runtime. Use this method to add services to the container.
@@ -56,18 +52,18 @@ namespace ProEnade.API
       {
       }), typeof(Startup));
 
-      services.AddMvc(options =>
-          {
-            options.Filters.Add(typeof(ValidateModelAttribute));
-          })
-          .AddFluentValidation();
+      //services.AddMvc(options =>
+      //    {
+      //      options.Filters.Add(typeof(ValidateModelAttribute));
+      //    })
+      //    .AddFluentValidation();
 
       services.AddControllers()
           .AddNewtonsoftJson(options =>
           {
             options.SerializerSettings.Formatting = Formatting.Indented;
             options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-            options.SerializerSettings.Converters = new List<JsonConverter> { new DecimalConverter() };
+          //  options.SerializerSettings.Converters = new List<JsonConverter> { new DecimalConverter() };
           });
 
       #region :: Validators ::
@@ -84,7 +80,7 @@ namespace ProEnade.API
       #endregion
 
       #region :: Generic Classes ::
-      services.AddTransient<HelperRepository>();
+     // services.AddTransient<HelperRepository>();
       #endregion
 
       #region :: Business ::
@@ -149,10 +145,10 @@ namespace ProEnade.API
 
       #region :: Filters ::
       // TODO: deixar em uma inclusão apenas
-      services.AddTransient<SignaRegraNegocioExceptionHandling>();
-      services.AddTransient<SignaSqlNotFoundExceptionHandling>();
-      services.AddTransient<SqlExceptionHandling>();
-      services.AddTransient<GenericExceptionHandling>();
+      //services.AddTransient<ExceptionHandling>();
+      //services.AddTransient<SignaSqlNotFoundExceptionHandling>();
+      //services.AddTransient<SqlExceptionHandling>();
+      //services.AddTransient<GenericExceptionHandling>();
       #endregion
 
       //#region :: AppSettings ::
@@ -242,7 +238,7 @@ namespace ProEnade.API
 
       loggerFactory.AddSerilog();
 
-      app.UseMiddleware(typeof(ErrorHandlingMiddleware));
+      //app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
       #region :: Middleware Claims from JWT ::
       // DOC: https://www.wellingtonjhn.com/posts/obtendo-o-usu%C3%A1rio-logado-em-apis-asp.net-core/
@@ -252,9 +248,9 @@ namespace ProEnade.API
         {
           try
           {
-            Global.UsuarioId = int.Parse(httpContext.Request.Headers["UsuarioId"]);
-            Global.EmpresaId = int.Parse(httpContext.Request.Headers["EmpresaId"]);
-            Global.GrupoUsuarioId = int.Parse(httpContext.Request.Headers["GrupoUsuarioId"]);
+            //Global.UsuarioId = int.Parse(httpContext.Request.Headers["UsuarioId"]);
+            //Global.EmpresaId = int.Parse(httpContext.Request.Headers["EmpresaId"]);
+            //Global.GrupoUsuarioId = int.Parse(httpContext.Request.Headers["GrupoUsuarioId"]);
           }
           catch (Exception) { }
         }
@@ -263,7 +259,7 @@ namespace ProEnade.API
         {
           try
           {
-            Global.UsuarioId = int.Parse(httpContext.User.Claims.Where(c => c.Type == "UserId").FirstOrDefault().Value);
+         //   Global.UsuarioId = int.Parse(httpContext.User.Claims.Where(c => c.Type == "UserId").FirstOrDefault().Value);
           }
           catch (Exception) { }
         }

@@ -23,9 +23,9 @@ namespace ProEnade.API.Business
         public int Insert(ProfessorRequest professorRequest)
         {
             VerificaSeProfessorJaExiste(professorRequest.NomeProfessor);
-            VerificaSeUnidadeExiste(professorRequest.IdDisciplina);
-
-            var professorEntity = _mapper.Map<ProfessorEntity>(professorRequest);
+            VerificaSeUnidadeExiste(professorRequest.NomeDisciplina);
+            ProfessorEntity professorEntity = new ProfessorEntity();
+             professorEntity = _mapper.Map<ProfessorEntity>(professorEntity);
             var idProfessor = _professorRepository.Insert(professorEntity);
 
             return idProfessor;
@@ -40,7 +40,7 @@ namespace ProEnade.API.Business
                 throw new Exception("Nenhum professor foi encontrado");
             }
 
-            VerificaSeUnidadeExiste(professorUpdateRequest.IdDisciplina);
+            VerificaSeUnidadeExiste(professorUpdateRequest.NomeDisciplina);
 
             var professorEntity = _mapper.Map<ProfessorEntity>(professorUpdateRequest);
             var linhasafetadas = _professorRepository.Update(professorEntity);
@@ -78,11 +78,11 @@ namespace ProEnade.API.Business
             }
         }
 
-        private void VerificaSeUnidadeExiste(int idUnidade)
+        private void VerificaSeUnidadeExiste(int idProfessor)
         {
-            var status = _professorRepository.GetStatusUnidadeById(idUnidade);
+            var status = _professorRepository.GetStatusUnidadeById(idProfessor);
 
-            if (status != 1)
+            if (status == 1)
             {
                 throw new Exception("A Unidade informada não existe");
             }
@@ -91,7 +91,7 @@ namespace ProEnade.API.Business
         {
             var id = _professorRepository.GetIdByNome(nome);
 
-            if (id != 0)
+            if (id == 1)
             {
                 throw new Exception("Já existe um professor cadastrado com esse nome");
             }

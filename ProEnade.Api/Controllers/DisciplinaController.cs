@@ -48,9 +48,9 @@ namespace ProEnade.API.Controllers
         [Route("update")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
-        public IActionResult Put([FromBody] DisciplinaUpdateRequest unidadeUpdateRequest)
+        public IActionResult Put([FromBody] DisciplinaUpdateRequest disciplinaUpdateRequest)
         {
-            var linhasAfetadas = _disciplinaBL.Update(unidadeUpdateRequest);
+            var linhasAfetadas = _disciplinaBL.Update(disciplinaUpdateRequest);
 
             if (linhasAfetadas == 1)
             {
