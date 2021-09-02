@@ -58,14 +58,14 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"SELECT id_professor, 
-                             nome,
+            var query = @"SELECT idProfessor, 
+                             nomeProfessor,
+                             dataNacimento,
                              idade,
-                             data_nascimento,
-                             status, 
-                             id_unidade
+                             nomeDisciplina,
+                             status
                             FROM professor
-                          WHERE id_professor = @idProfessor
+                          WHERE idProfessor = @idProfessor
                              AND status = 1;";
 
             return db.QueryFirstOrDefault<ProfessorEntity>(query, new { idProfessor });
@@ -95,27 +95,27 @@ namespace ProEnade.API.Data.Repositories
             return db.ExecuteScalar<string>(query, new { idProfessor });
         }
 
-        public int GetIdByNome(string nome)
+        public int GetIdByNome(string nomeProfessor)
         {
             using var db = Connection;
 
             var query = @"select id_professor 
 	                        from professor
-                        where nome = @Nome
+                        where nome_professor = @NomeProfessor
 	                        AND status = 1";
 
-            return db.ExecuteScalar<int>(query, new { nome });
+            return db.ExecuteScalar<int>(query, new { nomeProfessor });
         }
         public IEnumerable<ProfessorEntity> GetAllProfessores()
         {
             using var db = Connection;
 
-            var query = @"Select id_professor, 
-	                         nome, 
+            var query = @"Select idProfessor, 
+	                         nomeProfessor, 
+	                         dataNacimento, 
 	                         idade, 
-	                         data_nascimento, 
 	                         status, 
-	                         id_unidade
+	                         nomeDisciplina
 	                     From professor 
 		                      Where status = 1; ";
 

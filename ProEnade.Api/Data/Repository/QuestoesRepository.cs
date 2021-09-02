@@ -69,8 +69,9 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"SELECT idQuestoes,
-                              nomeDisciplina,
+
+            var query = @"SELECT id_questao,
+                              nome,
                               idade,
                               dataCadastro,
                               status,
@@ -107,8 +108,10 @@ namespace ProEnade.API.Data.Repositories
             using var db = Connection;
 
             var query = @"SELECT nome 
-                            FROM aluno 
-                        WHERE idQuestao = @idQuestao 
+
+                            FROM questao 
+                        WHERE id_questa = @id~Questao
+
                             AND status = 1;";
 
             return db.QueryFirstOrDefault<string>(query, new { idQuestao });
