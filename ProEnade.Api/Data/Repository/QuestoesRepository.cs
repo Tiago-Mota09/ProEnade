@@ -21,39 +21,47 @@ namespace ProEnade.API.Data.Repositories
             //metodo de insert a seguir:  //@ para poder pular linhas e reconhecer identação do banco //status não precisa, pois já vem com 1 como padrão
             //1ª parte INSERT quais colunas será inserido valores
             //2ª parte VALUES referenciando com a classe entity(Escrito igual no entity)
-            var query = @"INSERT INTO ALUNO           
-                            (nome,
-                             idade,
-                             data_nascimento,
-                             id_unidade)
-                     values( @Nome, 
-                             @Idade,
-                             @DataNascimento,
-                             @IdUnidade)
-                             RETURNING id_aluno;";  //
+            var query = @"INSERT INTO Questoes           
+                            (idQuestao,
+                             idDisciplina,
+                             nomeDisciplina,
+                             dificuldade,
+                             dataCadastro,
+                             Questão)
+                     values( @IdQuestao, 
+                             @IdDisciplina,
+                             @NomeDisciplina,
+                             @Dificuldade,
+                             @DataCadastro,
+                             @Questao)
+                             RETURNING idQuestao;";  //
 
             return db.ExecuteScalar<int>(query, new //ExecuteScalar retornar vários tipos de dados //new = instanciando algo novo
             //retorno para executar a query
             {
                 questoes.Dificuldade,
-                questoes.IdDisciplina
+                questoes.NomeDisciplina,
+                questoes.DataCadastro,
+                questoes.Questao
             });
         }
         public int Update(QuestoesEntity questoes)
         {
             using var db = Connection;
 
-            var query = @"UPDATE Aluno
-                            SET nome  = @Nome,
-                                idade = @Idade,
-                                data_nascimento = @DataNascimento,
-                                id_unidade = @IdUnidade
-                            WHERE id_aluno = @IdAluno AND status = 1;";
+            var query = @"UPDATE questoes
+                            SET nomeDisciplina  = @NomeDisciplina,
+                                dificuldade = @Dificuldade,
+                                dataCadastro = @DataCadastro,
+                                idDisciplina = @IdDisciplina
+                            WHERE idQuestao = @IdQuestao AND status = 1;";
 
             return db.Execute(query, new
             {
                 questoes.Dificuldade,
-                questoes.IdDisciplina ,
+                questoes.NomeDisciplina,
+                questoes.DataCadastro,
+                questoes.Questao,
                 questoes.IdQuestoes
             });
         }
@@ -61,14 +69,19 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
+<<<<<<< HEAD
             var query = @"SELECT id_questao,
                               nome,
+=======
+            var query = @"SELECT idQuestoes,
+                              nomeDisciplina,
+>>>>>>> Tiago_Development
                               idade,
-                              data_nascimento,
+                              dataCadastro,
                               status,
-                              id_unidade
-                            FROM Aluno
-                          WHERE id_aluno = @id
+                              idDisciplina
+                            FROM questoes
+                          WHERE idQuestoes = @idQuestoes
                              AND status = 1 ;";
 
             return db.QueryFirstOrDefault<QuestoesEntity>(query, new { id });//pra retornar a primeira entidade que achar ou null
@@ -88,8 +101,8 @@ namespace ProEnade.API.Data.Repositories
             using var db = Connection;
 
             var query = @"SELECT  status
-                            FROM unidade
-                          WHERE id_unidade = @idUnidade
+                            FROM Disciplina
+                          WHERE idDisciplina = @idDisciplina
                             AND status = 1;";
 
             return db.ExecuteScalar<int>(query, new { idDisciplina });
@@ -99,8 +112,13 @@ namespace ProEnade.API.Data.Repositories
             using var db = Connection;
 
             var query = @"SELECT nome 
+<<<<<<< HEAD
                             FROM questao 
                         WHERE id_questa = @id~Questao
+=======
+                            FROM aluno 
+                        WHERE idQuestao = @idQuestao 
+>>>>>>> Tiago_Development
                             AND status = 1;";
 
             return db.QueryFirstOrDefault<string>(query, new { idQuestao });
@@ -109,9 +127,9 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"select id_aluno 
-	                        from aluno
-                        WHERE nome = @Nome
+            var query = @"select idQuestao
+	                        from Questao
+                        WHERE nomeDisciplina = @NomeDisciplina
 	                        AND status = 1";
 
             return db.ExecuteScalar<int>(query, new { nome });
@@ -120,14 +138,14 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"SELECT * from aluno
-                             /*id_aluno,
-                             nome,
-                             idade,
-                             data_nascimento,
+            var query = @"SELECT * from questoes
+                             /*idQuestao,
+                             nomeDisciplina,
+                             dificuldade,
+                             dataCadastro,
                              status,
-                             id_unidade
-                        FROM Aluno*/
+                             id_Disciplina
+                        FROM questoes */
                             WHERE status = 1; ";
 
             return db.Query<QuestoesEntity>(query);
@@ -136,9 +154,9 @@ namespace ProEnade.API.Data.Repositories
         {
         using var db = Connection; 
 
-        var query = @"UPDATE Aluno      
+        var query = @"UPDATE questoes      
                         SET status = 2
-                      WHERE id_aluno = @id";
+                      WHERE idQuestao = @idQuestao";
 
             return db.Execute(query, new { id });
         }

@@ -1,10 +1,7 @@
 ﻿using Dapper;
 using ProEnade.API.Data.Entities;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ProEnade.API.Data.Repositories
 {
@@ -18,14 +15,15 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"INSERT INTO UNIDADE
-                            (nome_diciplina,
-                             id_disciplina,
+            var query = @"INSERT INTO Disciplina
+                            (nomeDisciplina,
+                             idDisciplina,
                              status)
                             values( 
                             @NomeDisciplina, 
-                            @IdDisciplina)
-                            RETURNING id_disciplina;";
+                            @IdDisciplina,
+                            @Status)
+                            RETURNING idDisciplina;";
 
             return db.ExecuteScalar<int>(query, new
             {
@@ -40,7 +38,7 @@ namespace ProEnade.API.Data.Repositories
 
             var query = @"SELECT  status
                             FROM disciplina
-                          WHERE id_disciplina = @IdDisciplina
+                          WHERE idDisciplina = @IdDisciplina
                             AND status = 1;";
 
             return db.ExecuteScalar<int>(query, new { idDisciplina });
@@ -50,9 +48,9 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"SELECT nome_disciplina 
+            var query = @"SELECT nomeDisciplina 
 	                        FROM disciplina
-                        WHERE id_unidade = @idDisciplina
+                        WHERE idDisciplina = @idDisciplina
 	                        AND status = 1";
 
             return db.ExecuteScalar<string>(query, new { idDisciplina});
@@ -62,9 +60,9 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"UPDATE nome_disciplina 
-                            SET nome_disciplina = @NomeDisciplina
-                         WHERE id_disciplina = @IdDisciplina AND status = 1";
+            var query = @"UPDATE nomeDisciplina 
+                            SET nomeDisciplina = @NomeDisciplina
+                         WHERE idDisciplina = @IdDisciplina AND status = 1";
 
             return db.Execute(query, new
             {
@@ -78,10 +76,10 @@ namespace ProEnade.API.Data.Repositories
             using var db = Connection;
 
             var query = @"SELECT id_disciplina,
-                                 nome_disciplina,
+                                 nomeDisciplina,
 		                         status
                                FROM disciplina
-                           WHERE id_disciplina = @idDisciplina
+                           WHERE idDisciplina = @idDisciplina
                                AND status = 1;";
 
             return db.QueryFirstOrDefault<DisciplinaEntity>(query, new { idDisciplina });
@@ -90,8 +88,8 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"SELECT id_disciplina,
-                             nome_disciplina,
+            var query = @"SELECT idDisciplina,
+                             nomeDisciplina,
 		                     status
                         FROM disciplina
                             WHERE status = 1; ";
@@ -99,16 +97,16 @@ namespace ProEnade.API.Data.Repositories
             return db.Query<DisciplinaEntity>(query);
         }
 
-        public int GetDisciplinaIdByNome(string nome)
+        public int GetDisciplinaIdByNome(string nomeDisciplina)
         {
             using var db = Connection;
 
-            var query = @"SELECT id_disciplina
+            var query = @"SELECT idDisciplina
                             FROM disciplina
-                          WHERE nome_disciplina = @NomeDisciplina
+                          WHERE nomeDisciplina = @NomeDisciplina
                             AND status = 1; ";
 
-            return db.ExecuteScalar<int>(query, new { nome });
+            return db.ExecuteScalar<int>(query, new { nomeDisciplina });
         }
         public int Delete(int id)
         {
@@ -116,7 +114,7 @@ namespace ProEnade.API.Data.Repositories
 
             var query = @"UPDATE disciplina
                         SET status = 2
-                      WHERE id_Disciplina = @IdDisciplina";
+                      WHERE idDisciplina = @IdDisciplina";
 
             return db.Execute(query, new { id });
         }

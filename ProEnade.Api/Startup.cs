@@ -36,6 +36,7 @@ namespace ProEnade.API
     public class Startup
     {
         public IConfiguration Configuration { get; }
+<<<<<<< HEAD
         //private readonly StartupValidator _startupValidator;
         //private string ApplicationBasePath { get; }
         //private string ApplicationName { get; }
@@ -49,6 +50,23 @@ namespace ProEnade.API
             //_startupValidator = new StartupValidator();
         }
 
+=======
+        private readonly StartupValidator _startupValidator;
+        private string ApplicationBasePath { get; }
+        private string ApplicationName { get; }
+
+        public Startup(
+            IConfiguration configuration,
+            IWebHostEnvironment env)
+        {
+            Configuration = configuration;
+            ApplicationBasePath = env.ContentRootPath;
+            ApplicationName = env.ApplicationName;
+            Global.ConnectionString = Configuration["DATABASE_CONNECTION"];
+            _startupValidator = new StartupValidator();
+        }
+
+>>>>>>> Tiago_Development
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -71,6 +89,7 @@ namespace ProEnade.API
                     options.SerializerSettings.Converters = new List<JsonConverter> { new DecimalConverter() };
                 });
 
+<<<<<<< HEAD
             #region :: FluentValidation ::
             services.AddMvc(options => { options.Filters.Add(typeof(ValidateModelAttribute)); }).AddFluentValidation();
             services.AddScoped<IValidator<QuestoesRequest>, QuestoesValidator>();
@@ -89,6 +108,20 @@ namespace ProEnade.API
 
             DefaultTypeMap.MatchNamesWithUnderscores = true;
             //Dapper.SqlMapper.AddTypeMap(typeof(string), System.Data.DbType.AnsiString);
+=======
+            #region :: Validators ::
+            #endregion
+
+            #region :: Acesso a Dados / Dapper ::
+            services.AddTransient<CursoRepository>();
+            services.AddTransient<DisciplinaRepository>();
+            services.AddTransient<ProfessorQuestoesRepository>();
+            services.AddTransient<ProfessorRepository>();
+            services.AddTransient<QuestoesRepository>();
+
+            DefaultTypeMap.MatchNamesWithUnderscores = true;
+            Dapper.SqlMapper.AddTypeMap(typeof(string), System.Data.DbType.AnsiString);
+>>>>>>> Tiago_Development
             #endregion
 
             #region :: Generic Classes ::
@@ -96,6 +129,10 @@ namespace ProEnade.API
             #endregion
 
             #region :: Business ::
+<<<<<<< HEAD
+=======
+            services.AddTransient<CursosBL>();
+>>>>>>> Tiago_Development
             services.AddTransient<DisciplinaBL>();
             services.AddTransient<ProfessorBL>();
             services.AddTransient<ProfessorQuestoesRepository>();
@@ -128,6 +165,7 @@ namespace ProEnade.API
             {
                 options.SwaggerDoc("v1",
                     new OpenApiInfo
+<<<<<<< HEAD
                     {
                         Title = "ProEnade",
                         Version = "v1",
@@ -138,16 +176,37 @@ namespace ProEnade.API
                             Url = new Uri("https://trello.com/b/evXPotRy/proenade")
                         }
                     });
+=======
+                        {
+                            Title = "ProEnade",
+                            Version = "v1",
+                            Description = "API Template ProEnade",
+                            Contact = new OpenApiContact
+                            {
+                                Name = "Team ProEnade 4°B",
+                                Url = new Uri("https://trello.com/b/evXPotRy/proenade")
+                            }
+                        });
+>>>>>>> Tiago_Development
 
                 options.AddSecurityDefinition(
                     "Bearer",
                     new OpenApiSecurityScheme
+<<<<<<< HEAD
                     {
                         In = ParameterLocation.Header,
                         Description = "Autenticação baseada em Json Web Token (JWT)",
                         Name = "Authorization",
                         Type = SecuritySchemeType.ApiKey
                     });
+=======
+                        {
+                            In = ParameterLocation.Header,
+                            Description = "Autenticação baseada em Json Web Token (JWT)",
+                            Name = "Authorization",
+                            Type = SecuritySchemeType.ApiKey
+                        });
+>>>>>>> Tiago_Development
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
