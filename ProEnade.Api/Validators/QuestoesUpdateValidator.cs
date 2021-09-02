@@ -23,12 +23,11 @@ namespace ProEnade.API.Validators
                         {
                             RuleFor(x => x.Dificuldade)
                                .NotEmpty().WithMessage("A Dificuldade deve ser inserida.")
-                               .LessThanOrEqualTo(20).WithMessage("A idade do aluno deve ser menor ou igual a 20 anos.")
                                .DependentRules(() =>
                                {
                                    RuleFor(x => x.IdDisciplina)
-                                       .GreaterThan(0).WithMessage("Informe a unidade.")
-                                     .LessThanOrEqualTo(100).WithMessage("A unidade informada não existe.");
+                                     .GreaterThan(0).WithMessage("Informe a unidade.")
+                                     .LessThanOrEqualTo(100).WithMessage("A Disciplina informada não existe.");
                                 });
                         });
                });

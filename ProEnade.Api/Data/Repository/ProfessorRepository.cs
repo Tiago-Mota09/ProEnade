@@ -64,6 +64,7 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
+
             var query = @"SELECT idprofessor, 
                              nomeprofessor,
                              idade,
@@ -72,6 +73,7 @@ namespace ProEnade.API.Data.Repositories
                              idprofessor
                             FROM professor
                           WHERE idprofessor = @idProfessor
+
                              AND status = 1;";
 
             return db.QueryFirstOrDefault<ProfessorEntity>(query, new { idProfessor });
@@ -101,27 +103,32 @@ namespace ProEnade.API.Data.Repositories
             return db.ExecuteScalar<string>(query, new { idProfessor });
         }
 
-        public int GetIdByNome(string nome)
+        public int GetIdByNome(string nomeProfessor)
         {
             using var db = Connection;
 
             var query = @"select idprofessor 
 	                        from professor
+
                         where nomeprofessor = @Nome
+
 	                        AND status = 1";
 
-            return db.ExecuteScalar<int>(query, new { nome });
+            return db.ExecuteScalar<int>(query, new { nomeProfessor });
         }
         public IEnumerable<ProfessorEntity> GetAllProfessores()
         {
             using var db = Connection;
+
 
             var query = @"Select idprofessor, 
 	                         nomeprofessor, 
 	                         idade, 
 	                         datanascimento, 
 	                         status, 
-	                         idprofessor
+	                         idprofessor,
+                           nomeDisciplina
+
 	                     From professor 
 		                      Where status = 1; ";
 

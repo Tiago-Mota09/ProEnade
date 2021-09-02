@@ -6,7 +6,6 @@ using ProEnade.API.Data.Repositories;
 using ProEnade.API.Domain.Models.Request;
 using ProEnade.API.Data.Entities;
 using ProEnade.API.Domain.Models.Response;
-using ProEnade.API.Data.Repositories;
 
 namespace ProEnade.API.Business
 {
@@ -36,7 +35,7 @@ namespace ProEnade.API.Business
 
             if (idProfessorQuestoes == 0)
             {
-                throw new Exception("Nenhuma referência entre professor e aluno foi encontrada");
+                throw new Exception("Nenhuma referência entre professor e questão foi encontrada");
             }
 
             return idProfessorQuestoes;
@@ -62,7 +61,7 @@ namespace ProEnade.API.Business
 
             if(status != 1)
             {
-                throw new Exception("Nenhum relação entre professor e aluno foi encontrada.");
+                throw new Exception("Nenhum relação entre professor e questão foi encontrada.");
             }
             else
             {

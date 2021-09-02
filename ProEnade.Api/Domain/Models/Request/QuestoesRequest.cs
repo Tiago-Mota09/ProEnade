@@ -7,7 +7,7 @@ namespace ProEnade.API.Domain.Models.Request
         public int IdQuestao { get; set; }
         public int IdDisciplina { get; set; }
         public string NomeDisciplina { get; set; }
-        public int Dificuldade { get; set; }
+        public string Dificuldade { get; set; }//F, M, D
         public DateTime DataCadastro { get; set; }
         public string Questao { get; set; }
 
