@@ -14,7 +14,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using ProEnade.API.Business;
+using ProEnade.API.Data.Entities;
 using ProEnade.API.Data.Repositories;
+using ProEnade.API.Domain.Models.Request;
+using ProEnade.API.Validators;
 using Serilog;
 using Signa.Library.Core;
 using Signa.Library.Core.Aspnet.Filters;
@@ -70,18 +73,25 @@ namespace ProEnade.API
                     options.SerializerSettings.Converters = new List<JsonConverter> { new DecimalConverter() };
                 });
 
-            #region :: Validators ::
+
+            #region :: FluentValidation ::
+            services.AddMvc(options => { options.Filters.Add(typeof(ValidateModelAttribute)); }).AddFluentValidation();
+            services.AddScoped<IValidator<QuestoesRequest>, QuestoesValidator>();
+            services.AddScoped<IValidator<QuestoesUpdateRequest>, QuestoesUpdateValidator>();
+            services.AddScoped<IValidator<DisciplinaRequest>, DisciplinaValidator>();
+            services.AddScoped<IValidator<DisciplinaUpdateRequest>, DisciplinaUpdateValidator>();
+            services.AddScoped<IValidator<ProfessorRequest>, ProfessorValidator>();
+            services.AddScoped<IValidator<ProfessorUpdateRequest>, ProfessorUpdateValidator>();
             #endregion
 
             #region :: Acesso a Dados / Dapper ::
-            services.AddTransient<CursoRepository>();
-            services.AddTransient<DisciplinaRepository>();
-            services.AddTransient<ProfessorQuestoesRepository>();
-            services.AddTransient<ProfessorRepository>();
-            services.AddTransient<QuestoesRepository>();
+            services.AddScoped<DisciplinaRepository>();
+            services.AddScoped<ProfessorQuestoesRepository>();
+            services.AddScoped<ProfessorRepository>();
+            services.AddScoped<QuestoesRepository>();
 
             DefaultTypeMap.MatchNamesWithUnderscores = true;
-            Dapper.SqlMapper.AddTypeMap(typeof(string), System.Data.DbType.AnsiString);
+            //Dapper.SqlMapper.AddTypeMap(typeof(string), System.Data.DbType.AnsiString);
             #endregion
 
             #region :: Generic Classes ::
@@ -89,6 +99,7 @@ namespace ProEnade.API
             #endregion
 
             #region :: Business ::
+
             services.AddTransient<CursosBL>();
             services.AddTransient<DisciplinaBL>();
             services.AddTransient<ProfessorBL>();
@@ -97,19 +108,19 @@ namespace ProEnade.API
             #endregion
 
             #region :: AutoMapper ::
-            //      var config = new AutoMapper.MapperConfiguration(cfg =>
-            //{
-            //  cfg.CreateMap<DisciplinaEntity, ComboModel>().ReverseMap();
-            //  cfg.CreateMap<ProfessorEntity, ComboModel>().ReverseMap();
-            //  cfg.CreateMap<ProfessorQuestoesEntity, ComboModel>().ReverseMap();
-            //  cfg.CreateMap<QuestoesEntity, ComboModel>().ReverseMap();
-            //});
+            var config = new AutoMapper.MapperConfiguration(cfg =>
+      {
+          cfg.CreateMap<DisciplinaEntity, DisciplinaRepository>().ReverseMap();
+          cfg.CreateMap<ProfessorEntity, ProfessorRepository>().ReverseMap();
+          cfg.CreateMap<ProfessorQuestoesEntity, ProfessorRepository>().ReverseMap();
+          cfg.CreateMap<QuestoesEntity, QuestoesRepository>().ReverseMap();
+      });
 
-            //IMapper mapper = config.CreateMapper();
-            //services.AddSingleton(mapper);
+            IMapper mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
 
             services.AddAutoMapper(typeof(Startup));
-            services.AddAutoMapper(new Action<IMapperConfigurationExpression>(x => { }), typeof(Startup));
+            //services.AddAutoMapper(new Action<IMapperConfigurationExpression>(x => { }), typeof(Startup));
             #endregion
 
             #region :: Swagger ::
@@ -122,26 +133,27 @@ namespace ProEnade.API
             {
                 options.SwaggerDoc("v1",
                     new OpenApiInfo
+        {
+                        Title = "ProEnade",
+                        Version = "v1",
+                        Description = "API Template ProEnade",
+                        Contact = new OpenApiContact
                         {
-                            Title = "ProEnade",
-                            Version = "v1",
-                            Description = "API Template ProEnade",
-                            Contact = new OpenApiContact
-                            {
-                                Name = "Team ProEnade 4°B",
-                                Url = new Uri("https://trello.com/b/evXPotRy/proenade")
-                            }
-                        });
+                            Name = "Team ProEnade 4°B",
+                            Url = new Uri("https://trello.com/b/evXPotRy/proenade")
+                        }
+                    });
 
                 options.AddSecurityDefinition(
                     "Bearer",
                     new OpenApiSecurityScheme
-                        {
-                            In = ParameterLocation.Header,
-                            Description = "Autenticação baseada em Json Web Token (JWT)",
-                            Name = "Authorization",
-                            Type = SecuritySchemeType.ApiKey
-                        });
+
+                    {
+                        In = ParameterLocation.Header,
+                        Description = "Autenticação baseada em Json Web Token (JWT)",
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.ApiKey
+                    });
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
