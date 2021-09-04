@@ -1,4 +1,5 @@
 using AutoMapper;
+using Catel.Data;
 using Dapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -19,11 +20,6 @@ using ProEnade.API.Data.Repositories;
 using ProEnade.API.Domain.Models.Request;
 using ProEnade.API.Validators;
 using Serilog;
-using Signa.Library.Core;
-using Signa.Library.Core.Aspnet.Filters;
-using Signa.Library.Core.Aspnet.Filters.ErrorHandlings;
-using Signa.Library.Core.Aspnet.Helpers;
-using Signa.Library.Core.Data.Repository;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,9 +29,23 @@ using System.Threading.Tasks;
 
 namespace ProEnade.API
 {
+
     public class Startup
     {
         public IConfiguration Configuration { get; }
+
+        //private readonly StartupValidator _startupValidator;
+        //private string ApplicationBasePath { get; }
+        //private string ApplicationName { get; }
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+            //ApplicationBasePath = env.ContentRootPath;
+            //ApplicationName = env.ApplicationName;
+            //Global.ConnectionString = Configuration["DATABASE_CONNECTION"];
+            //_startupValidator = new StartupValidator();
+        }
 
         private readonly StartupValidator _startupValidator;
         private string ApplicationBasePath { get; }
@@ -96,6 +106,7 @@ namespace ProEnade.API
 
             Dapper.SqlMapper.AddTypeMap(typeof(string), System.Data.DbType.AnsiString);
 
+
             #endregion
 
             #region :: Generic Classes ::
@@ -109,6 +120,7 @@ namespace ProEnade.API
             services.AddTransient<ProfessorBL>();
             services.AddTransient<DisciplinaQuestoesRepository>();
             services.AddTransient<QuestoesBL>();
+
             #endregion
 
             #region :: AutoMapper ::
@@ -154,8 +166,6 @@ namespace ProEnade.API
                 options.AddSecurityDefinition(
                     "Bearer",
                     new OpenApiSecurityScheme
-
-                    {
                         In = ParameterLocation.Header,
                         Description = "Autenticação baseada em Json Web Token (JWT)",
                         Name = "Authorization",
@@ -167,6 +177,7 @@ namespace ProEnade.API
                 options.IncludeXmlComments(xmlPath);
             });
             #endregion
+
 
             #region :: Filters ::
             // TODO: deixar em uma inclusão apenas
@@ -188,6 +199,7 @@ namespace ProEnade.API
             #region :: JWT / Token / Auth ::
             //var signingConfigurations = new SigningConfigurations(appSettings.Secret);
             //services.AddSingleton(signingConfigurations);
+
 
             //var tokenConfigurations = new TokenConfigurations();
 
@@ -234,12 +246,15 @@ namespace ProEnade.API
             //            .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
             //            .RequireAuthenticatedUser().Build());
             //});
+
             #endregion
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

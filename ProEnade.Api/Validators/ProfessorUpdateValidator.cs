@@ -15,7 +15,7 @@ namespace ProEnade.API.Validators
                 .MaximumLength(150).WithMessage("O nome deve ter no máximo 150 caracteres")
                 .DependentRules(() =>
                 {
-                    RuleFor(x => x.IdDisciplina)
+                    RuleFor(x => x.NomeDisciplina)
                        .GreaterThanOrEqualTo(18).WithMessage("A idade do professor deve ser maior ou igual a 18 anos.")
                        .LessThanOrEqualTo(80).WithMessage("A idade do professor deve ser menor ou igual a 80 anos.")
                        .DependentRules(() =>
