@@ -15,22 +15,17 @@ namespace ProEnade.API.Validators
                .GreaterThan(0).WithMessage("Informe o ID") //Não pode zero
                .DependentRules(() =>
                {
-                   RuleFor(x => x.IdQuestao)
-                        .NotNull().WithMessage("Informe o Id")
-                        .NotEmpty().WithMessage("informe o Id")
-                        .GreaterThan(0).WithMessage("Informe o ID")
-                        .DependentRules(() =>
-                        {
-                            RuleFor(x => x.Dificuldade)
+                             RuleFor(x => x.Dificuldade)
                                .NotEmpty().WithMessage("A Dificuldade deve ser inserida.")
                                .DependentRules(() =>
                                {
-                                   RuleFor(x => x.IdDisciplina)
-                                     .GreaterThan(0).WithMessage("Informe a unidade.")
-                                     .LessThanOrEqualTo(100).WithMessage("A Disciplina informada não existe.");
+                                   RuleFor(x => x.NomeDisciplina)
+                                     .NotNull().WithMessage("Informe o nome da disciplina")//Não pode ser nulo
+                                     .NotEmpty().WithMessage("informe o nome da disciplina")//não pode vazio
+                                     .MinimumLength(5).WithMessage("O nome deve ter no mínimo 5 caracteres")
+                                     .MaximumLength(150).WithMessage("O nome deve ter no máximo 150 caracteres");
                                 });
                         });
-               });
         }
     }
 }

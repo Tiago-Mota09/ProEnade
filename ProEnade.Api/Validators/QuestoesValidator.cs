@@ -10,14 +10,15 @@ namespace ProEnade.API.Validators
             CascadeMode = CascadeMode.StopOnFirstFailure;//da consistência em sequência
 
            
-            RuleFor(x => x.IdQuestao)
+            RuleFor(x => x.IdQuestoes)
                 .GreaterThan(0).WithMessage("Informe a questão.")
                 .DependentRules(() =>
                  {
-                             RuleFor(x => x.IdDisciplina)
-                                .GreaterThan(0).WithMessage("Informe a unidade.");
-                                //.LessThanOrEqualTo(100).WithMessage("A unidade informada não existe.");
-                });
+                             RuleFor(x => x.NomeDisciplina)
+                                .NotEmpty().WithMessage("Informe a Disciplina")
+                                .MinimumLength(5).WithMessage("O nome deve ter no mínimo 5 caracteres")
+                                .MaximumLength(150).WithMessage("O nome deve ter no máximo 150 caracteres");
+                 });
         }
     }
 }

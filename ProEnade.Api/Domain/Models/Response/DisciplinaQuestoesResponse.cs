@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace ProEnade.API.Domain.Models.Request
+﻿namespace ProEnade.API.Domain.Models.Response
 {
-    public class QuestoesRequest
+    public class DisciplinaQuestoesResponse
     {
         public int IdDisciplinaQuestoes { get; set; }
         public int IdProfessor { get; set; }
@@ -11,6 +9,6 @@ namespace ProEnade.API.Domain.Models.Request
         public string Dificuldade { get; set; }
         public string NomeDisciplina { get; set; }
         public int Status { get; set; }
-
     }
 }
+

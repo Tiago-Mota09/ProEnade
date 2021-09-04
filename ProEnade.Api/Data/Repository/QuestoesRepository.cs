@@ -21,28 +21,29 @@ namespace ProEnade.API.Data.Repositories
             //metodo de insert a seguir:  //@ para poder pular linhas e reconhecer identação do banco //status não precisa, pois já vem com 1 como padrão
             //1ª parte INSERT quais colunas será inserido valores
             //2ª parte VALUES referenciando com a classe entity(Escrito igual no entity)
-            var query = @"INSERT INTO Questoes           
+
+            var query = @"INSERT INTO Questao           
                             (idQuestao,
-                             idDisciplina,
-                             nomeDisciplina,
-                             dificuldade,
-                             dataCadastro,
-                             Questão)
+                             Dificuldade,
+                             DataCadastro,
+                             NomeDisciplina,
+                             Questão,
+                             RespostaQuestao,
+                             Status)
                      values( @IdQuestao, 
-                             @IdDisciplina,
-                             @NomeDisciplina,
                              @Dificuldade,
                              @DataCadastro,
-                             @Questao)
+                             @NomeDisciplina,
+                             @RespostaQuestao)
                              RETURNING idQuestao;";  //
 
             return db.ExecuteScalar<int>(query, new //ExecuteScalar retornar vários tipos de dados //new = instanciando algo novo
             //retorno para executar a query
             {
                 questoes.Dificuldade,
-                questoes.NomeDisciplina,
                 questoes.DataCadastro,
-                questoes.Questao
+                questoes.NomeDisciplina,
+                questoes.Resposta
             });
         }
         public int Update(QuestoesEntity questoes)
@@ -70,11 +71,17 @@ namespace ProEnade.API.Data.Repositories
             using var db = Connection;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             var query = @"SELECT id_questao,
                               nome,
 =======
             var query = @"SELECT idQuestoes,
                               nomeDisciplina,
+>>>>>>> Tiago_Development
+=======
+
+            var query = @"SELECT id_questao,
+                              nome,
 >>>>>>> Tiago_Development
                               idade,
                               dataCadastro,
@@ -86,16 +93,16 @@ namespace ProEnade.API.Data.Repositories
 
             return db.QueryFirstOrDefault<QuestoesEntity>(query, new { id });//pra retornar a primeira entidade que achar ou null
         }
-        //public int GetStatusById(int idUnidade)
-        //{
-        //    using var db = Connection;
+        public int GetStatusByName(int idDisciplina)
+        {
+            using var db = Connection;
 
-        //    var query = @"SELECT  status
-        //                    FROM unidade
-        //                  WHERE id_unidade = @idUnidade";
+            var query = @"SELECT  status
+                            FROM Disciplina
+                          WHERE id_Disciplina = @idDisciplina";
 
-        //    return db.ExecuteScalar<int>(query, new { idUnidade });
-        //}
+            return db.ExecuteScalar<int>(query, new { idDisciplina });
+        }
         public int GetStatusDisciplinaById(int idDisciplina)
         {
             using var db = Connection;
@@ -113,11 +120,18 @@ namespace ProEnade.API.Data.Repositories
 
             var query = @"SELECT nome 
 <<<<<<< HEAD
+<<<<<<< HEAD
                             FROM questao 
                         WHERE id_questa = @id~Questao
 =======
                             FROM aluno 
                         WHERE idQuestao = @idQuestao 
+>>>>>>> Tiago_Development
+=======
+
+                            FROM questao 
+                        WHERE id_questa = @idQuestao
+
 >>>>>>> Tiago_Development
                             AND status = 1;";
 
@@ -139,13 +153,13 @@ namespace ProEnade.API.Data.Repositories
             using var db = Connection;
 
             var query = @"SELECT * from questoes
-                             /*idQuestao,
+                             idQuestao,
                              nomeDisciplina,
                              dificuldade,
                              dataCadastro,
                              status,
                              id_Disciplina
-                        FROM questoes */
+                        FROM questoes
                             WHERE status = 1; ";
 
             return db.Query<QuestoesEntity>(query);

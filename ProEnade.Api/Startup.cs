@@ -37,6 +37,7 @@ namespace ProEnade.API
     {
         public IConfiguration Configuration { get; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         //private readonly StartupValidator _startupValidator;
         //private string ApplicationBasePath { get; }
         //private string ApplicationName { get; }
@@ -51,6 +52,8 @@ namespace ProEnade.API
         }
 
 =======
+=======
+>>>>>>> Tiago_Development
         private readonly StartupValidator _startupValidator;
         private string ApplicationBasePath { get; }
         private string ApplicationName { get; }
@@ -66,6 +69,9 @@ namespace ProEnade.API
             _startupValidator = new StartupValidator();
         }
 
+<<<<<<< HEAD
+>>>>>>> Tiago_Development
+=======
 >>>>>>> Tiago_Development
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
@@ -90,6 +96,10 @@ namespace ProEnade.API
                 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> Tiago_Development
             #region :: FluentValidation ::
             services.AddMvc(options => { options.Filters.Add(typeof(ValidateModelAttribute)); }).AddFluentValidation();
             services.AddScoped<IValidator<QuestoesRequest>, QuestoesValidator>();
@@ -102,12 +112,13 @@ namespace ProEnade.API
 
             #region :: Acesso a Dados / Dapper ::
             services.AddScoped<DisciplinaRepository>();
-            services.AddScoped<ProfessorQuestoesRepository>();
+            services.AddScoped<DisciplinaQuestoesRepository>();
             services.AddScoped<ProfessorRepository>();
             services.AddScoped<QuestoesRepository>();
 
             DefaultTypeMap.MatchNamesWithUnderscores = true;
             //Dapper.SqlMapper.AddTypeMap(typeof(string), System.Data.DbType.AnsiString);
+<<<<<<< HEAD
 =======
             #region :: Validators ::
             #endregion
@@ -122,6 +133,8 @@ namespace ProEnade.API
             DefaultTypeMap.MatchNamesWithUnderscores = true;
             Dapper.SqlMapper.AddTypeMap(typeof(string), System.Data.DbType.AnsiString);
 >>>>>>> Tiago_Development
+=======
+>>>>>>> Tiago_Development
             #endregion
 
             #region :: Generic Classes ::
@@ -130,12 +143,17 @@ namespace ProEnade.API
 
             #region :: Business ::
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+            services.AddTransient<CursosBL>();
+>>>>>>> Tiago_Development
+=======
+
             services.AddTransient<CursosBL>();
 >>>>>>> Tiago_Development
             services.AddTransient<DisciplinaBL>();
             services.AddTransient<ProfessorBL>();
-            services.AddTransient<ProfessorQuestoesRepository>();
+            services.AddTransient<DisciplinaQuestoesRepository>();
             services.AddTransient<QuestoesBL>();
             #endregion
 
@@ -144,7 +162,7 @@ namespace ProEnade.API
       {
           cfg.CreateMap<DisciplinaEntity, DisciplinaRepository>().ReverseMap();
           cfg.CreateMap<ProfessorEntity, ProfessorRepository>().ReverseMap();
-          cfg.CreateMap<ProfessorQuestoesEntity, ProfessorRepository>().ReverseMap();
+          cfg.CreateMap<DisciplinaQuestoesEntity, ProfessorRepository>().ReverseMap();
           cfg.CreateMap<QuestoesEntity, QuestoesRepository>().ReverseMap();
       });
 
@@ -166,7 +184,11 @@ namespace ProEnade.API
                 options.SwaggerDoc("v1",
                     new OpenApiInfo
 <<<<<<< HEAD
+<<<<<<< HEAD
                     {
+=======
+        {
+>>>>>>> Tiago_Development
                         Title = "ProEnade",
                         Version = "v1",
                         Description = "API Template ProEnade",
@@ -176,6 +198,7 @@ namespace ProEnade.API
                             Url = new Uri("https://trello.com/b/evXPotRy/proenade")
                         }
                     });
+<<<<<<< HEAD
 =======
                         {
                             Title = "ProEnade",
@@ -188,17 +211,24 @@ namespace ProEnade.API
                             }
                         });
 >>>>>>> Tiago_Development
+=======
+>>>>>>> Tiago_Development
 
                 options.AddSecurityDefinition(
                     "Bearer",
                     new OpenApiSecurityScheme
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> Tiago_Development
                     {
                         In = ParameterLocation.Header,
                         Description = "Autenticação baseada em Json Web Token (JWT)",
                         Name = "Authorization",
                         Type = SecuritySchemeType.ApiKey
                     });
+<<<<<<< HEAD
 =======
                         {
                             In = ParameterLocation.Header,
@@ -206,6 +236,8 @@ namespace ProEnade.API
                             Name = "Authorization",
                             Type = SecuritySchemeType.ApiKey
                         });
+>>>>>>> Tiago_Development
+=======
 >>>>>>> Tiago_Development
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -222,16 +254,16 @@ namespace ProEnade.API
             services.AddTransient<GenericExceptionHandling>();
             #endregion
 
-            //#region :: AppSettings ::
+            #region :: AppSettings ::
             //var appSettingsSection = Configuration.GetSection("AppSettings");
             //services.Configure<AppSettings>(appSettingsSection);
 
             //var appSettings = appSettingsSection.Get<AppSettings>();
 
             //_startupValidator.Validate(appSettings);
-            //#endregion
+            #endregion
 
-            //#region :: JWT / Token / Auth ::
+            #region :: JWT / Token / Auth ::
             //var signingConfigurations = new SigningConfigurations(appSettings.Secret);
             //services.AddSingleton(signingConfigurations);
 
@@ -280,7 +312,7 @@ namespace ProEnade.API
             //            .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
             //            .RequireAuthenticatedUser().Build());
             //});
-            //#endregion
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
