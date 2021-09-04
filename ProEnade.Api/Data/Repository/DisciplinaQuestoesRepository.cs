@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace ProEnade.API.Data.Repositories
 {
-    public class ProfessorQuestoesRepository : RepositoryBase
+    public class DisciplinaQuestoesRepository : RepositoryBase
     {
-        public ProfessorQuestoesRepository(IConfiguration configuration)
+        public DisciplinaQuestoesRepository(IConfiguration configuration)
         {
             base.configuration = configuration;
         }
-        public int Insert(ProfessorQuestoesEntity professorQuestoes)
+        public int Insert(DisciplinaQuestoesEntity disciplinaQuestoes)
         {
             using var db = Connection;
 
@@ -22,40 +22,40 @@ namespace ProEnade.API.Data.Repositories
 
             return db.ExecuteScalar<int>(query, new
             {
-                professorQuestoes.IdProfessor,
-                professorQuestoes.IdQuestoes
+                disciplinaQuestoes.IdProfessor,
+                disciplinaQuestoes.IdQuestoes
             });
         }
-        public int Update(ProfessorQuestoesEntity professorQuestoes)
+        public int Update(DisciplinaQuestoesEntity disciplinaQuestoes)
         {
             using var db = Connection;
 
-            var query = @"UPDATE ProfessorQuestoes
-                            SET idProfessor = @IdProfessor,
+            var query = @"UPDATE DisciplinaQuestoes
+                            SET idDisciplina = @IdDisciplina,
                                 idQuestoes = @IdQuestoes
-                          WHERE idProfessorQuestoes = @IdProfessorQuestoes AND status = 1;";
+                          WHERE idDisciplinaQuestoes = @IdDisciplinaQuestoes AND status = 1;";
 
             return db.Execute(query, new
             {
-                professorQuestoes.IdProfessor,
-                professorQuestoes.IdQuestoes,
-                professorQuestoes.IdProfessorQuestoes
+                disciplinaQuestoes.IdDisciplina,
+                disciplinaQuestoes.IdQuestoes,
+                disciplinaQuestoes.IdDisciplinaQuestoes
             });
         }
 
-        //public ProfessorQuestoesEntity GetProfessor_Questoes(int idProfessorQuestoes)
+        //public DisciplinaQuestoesEntity GetDisciplinaQuestoes(int idDisciplinaQuestoes)
         //{
         //    using var db = Connection;
 
-        //    var query = @"SELECT id_professor_Questoes, 
+        //    var query = @"SELECT idDisciplinaQuestoes, 
         //                     nome,
         //                     status, 
         //                     id_unidade
-        //                     FROM professor_Questoes
-        //                  WHERE id_professor_Questoes = @idProfessor_Questoes
+        //                     FROM DisciplinaQuestoes
+        //                  WHERE idDisciplinaQuestoes = @idDisciplinaQuestoes
         //                     AND status = 1;";
 
-        //    return db.QueryFirstOrDefault<ProfessorQuestoesEntity>(query, new { idProfessorQuestoes });
+        //    return db.QueryFirstOrDefault<DisciplinaQuestoesEntity>(query, new { idDisciplinaQuestoes });
         //}
 
         //public int GetStatusDisciplinaById(int idDisciplina)
@@ -70,37 +70,37 @@ namespace ProEnade.API.Data.Repositories
         //    return db.ExecuteScalar<int>(query, new { idDisciplina });
         //}
 
-        public IEnumerable<ProfessorQuestoesEntity> GetAllProfessorQuestoesById(int idProfessor)
+        public IEnumerable<DisciplinaQuestoesEntity> GetAllDisciplinaQuestoesById(int idDisciplina)
         {
             using var db = Connection;
 
-            var query = @"SELECT  pq.id_professorQuestoes,
+            var query = @"SELECT  pq.idDisciplinaQuestoes,
                                   q.idQuestoes, 
 		                          q.nomeQuestoes
 	                        FROM professorQuestoes pq
 		                          INNER join questoes q
 			                        ON pq.idQuestoes = q.idQuestoes
-	                        WHERE pa.idProfessor = @idProfessor AND pq.status = 1";
+	                        WHERE pa.idDisciplina = @idDisciplina AND pq.status = 1";
 
-            return db.Query<ProfessorQuestoesEntity>(query, new { idProfessor });
+            return db.Query<DisciplinaQuestoesEntity>(query, new { idDisciplina });
         }
 
-        public ProfessorQuestoesEntity GetProfessorQuestoesById(int idProfessorQuestoes)
+        public DisciplinaQuestoesEntity GetDisciplinaQuestoesById(int idDisciplinaQuestoes)
         {
             using var db = Connection;
 
-            var query = @"SELECT  pq.id_professorQuestoes,
+            var query = @"SELECT  pq.idDisciplina,
                                   q.idQuestoes, 
 		                          q.nomeQuestoes
 	                        FROM professorQuestoes pq
 		                          INNER join Questoes q
 			                        ON pq.idQuestoes = q.idQuestoes
-	                        WHERE pq.idProfessorQuestoes = @idProfessorQuestoes AND pq.status = 1";
+	                        WHERE pq.idDisciplinaQuestoes = @idDisciplinaQuestoes AND pq.status = 1";
 
-            return db.QueryFirstOrDefault<ProfessorQuestoesEntity>(query, new { idProfessorQuestoes });
+            return db.QueryFirstOrDefault<DisciplinaQuestoesEntity>(query, new { idDisciplinaQuestoes });
         }
 
-        public int GetStatusProfessorQuestoesById(int idProfessorQuestoes)
+        public int GetStatusProfessorQuestoesById(int idDisciplinaQuestoes)
         {
             using var db = Connection;
 
@@ -108,25 +108,25 @@ namespace ProEnade.API.Data.Repositories
                                FROM professorQuestoes
                           WHERE idProfessorQuestoes = @idProfessorQuestoes";
 
-            return db.ExecuteScalar<int>(query, new { idProfessorQuestoes });
+            return db.ExecuteScalar<int>(query, new { idDisciplinaQuestoes });
         }
 
         //public int GetIdByNome(string nome)
         //{
         //    using var db = Connection;
 
-        //    var query = @"select al.nome nome_questoes
-        //                 from professor_aluno pa
+        //    var query = @"select nome nome_questoes
+        //                 from disciplinaQuestoes
         //                where nome = @Nome
         //                 AND status = 1";
 
         //    return db.ExecuteScalar<int>(query, new { nome });
         //}
-        //public IEnumerable<ProfessorQuestoesEntity> GetAllProfessoresQuestoes()
+        //public IEnumerable<DisciplinaQuestoesEntity> GetAllDisciplinaQuestoes()
         //{
         //    using var db = Connection;
 
-        //    var query = @"Select id_professor_Questoes, 
+        //    var query = @"Select idDisciplinaQuestoes, 
         //                  nome, 
         //                  idade, 
         //                  data_nascimento, 
@@ -135,15 +135,15 @@ namespace ProEnade.API.Data.Repositories
         //              From professor_Questoes 
         //                Where status = 1; ";
 
-        //    return db.Query<ProfessorQuestoesEntity>(query);
+        //    return db.Query<DisciplinaQuestoesEntity>(query);
         //}
         public int Delete(int id)
         {
             using var db = Connection;
 
-            var query = @"UPDATE ProfessorQuestoes
+            var query = @"UPDATE DisciplinaQuestoes
                         SET status = 2
-                      WHERE idProfessorQuestoes= @id";
+                      WHERE idDisciplinaQuestoes= @id";
 
             return db.Execute(query, new { id });
         }

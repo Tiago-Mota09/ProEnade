@@ -47,7 +47,6 @@ namespace ProEnade.API
             //_startupValidator = new StartupValidator();
         }
 
-
         private readonly StartupValidator _startupValidator;
         private string ApplicationBasePath { get; }
         private string ApplicationName { get; }
@@ -94,19 +93,18 @@ namespace ProEnade.API
             services.AddScoped<IValidator<DisciplinaUpdateRequest>, DisciplinaUpdateValidator>();
             services.AddScoped<IValidator<ProfessorRequest>, ProfessorValidator>();
             services.AddScoped<IValidator<ProfessorUpdateRequest>, ProfessorUpdateValidator>();
+
             #endregion
 
             #region :: Acesso a Dados / Dapper ::
             services.AddScoped<DisciplinaRepository>();
-            services.AddScoped<ProfessorQuestoesRepository>();
+            services.AddScoped<DisciplinaQuestoesRepository>();
             services.AddScoped<ProfessorRepository>();
             services.AddScoped<QuestoesRepository>();
 
             DefaultTypeMap.MatchNamesWithUnderscores = true;
-            //Dapper.SqlMapper.AddTypeMap(typeof(string), System.Data.DbType.AnsiString);
 
-            #region :: Validators ::
-            #endregion
+            Dapper.SqlMapper.AddTypeMap(typeof(string), System.Data.DbType.AnsiString);
 
 
             #endregion
@@ -120,7 +118,7 @@ namespace ProEnade.API
             services.AddTransient<CursosBL>();
             services.AddTransient<DisciplinaBL>();
             services.AddTransient<ProfessorBL>();
-            services.AddTransient<ProfessorQuestoesRepository>();
+            services.AddTransient<DisciplinaQuestoesRepository>();
             services.AddTransient<QuestoesBL>();
 
             #endregion
@@ -130,7 +128,8 @@ namespace ProEnade.API
       {
           cfg.CreateMap<DisciplinaEntity, DisciplinaRepository>().ReverseMap();
           cfg.CreateMap<ProfessorEntity, ProfessorRepository>().ReverseMap();
-          cfg.CreateMap<ProfessorQuestoesEntity, ProfessorRepository>().ReverseMap();
+          cfg.CreateMap<DisciplinaQuestoesEntity, ProfessorRepository>().ReverseMap();
+
           cfg.CreateMap<QuestoesEntity, QuestoesRepository>().ReverseMap();
       });
 
@@ -154,29 +153,24 @@ namespace ProEnade.API
 
                     {
 
-
+                        Title = "ProEnade",
+                        Version = "v1",
+                        Description = "API Template ProEnade",
+                        Contact = new OpenApiContact
                         {
-                            Title = "ProEnade",
-                            Version = "v1",
-                            Description = "API Template ProEnade",
-                            Contact = new OpenApiContact
-                            {
-                                Name = "Team ProEnade 4°B",
-                                Url = new Uri("https://trello.com/b/evXPotRy/proenade")
-                            }
-                        });
-
+                            Name = "Team ProEnade 4°B",
+                            Url = new Uri("https://trello.com/b/evXPotRy/proenade")
+                        }
+                    });
 
                 options.AddSecurityDefinition(
                     "Bearer",
                     new OpenApiSecurityScheme
-                {
                         In = ParameterLocation.Header,
                         Description = "Autenticação baseada em Json Web Token (JWT)",
                         Name = "Authorization",
                         Type = SecuritySchemeType.ApiKey
                     });
-
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -193,16 +187,16 @@ namespace ProEnade.API
             services.AddTransient<GenericExceptionHandling>();
             #endregion
 
-            //#region :: AppSettings ::
+            #region :: AppSettings ::
             //var appSettingsSection = Configuration.GetSection("AppSettings");
             //services.Configure<AppSettings>(appSettingsSection);
 
             //var appSettings = appSettingsSection.Get<AppSettings>();
 
             //_startupValidator.Validate(appSettings);
-            //#endregion
+            #endregion
 
-            //#region :: JWT / Token / Auth ::
+            #region :: JWT / Token / Auth ::
             //var signingConfigurations = new SigningConfigurations(appSettings.Secret);
             //services.AddSingleton(signingConfigurations);
 
@@ -252,7 +246,8 @@ namespace ProEnade.API
             //            .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
             //            .RequireAuthenticatedUser().Build());
             //});
-            //#endregion
+
+            #endregion
 
         }
 
