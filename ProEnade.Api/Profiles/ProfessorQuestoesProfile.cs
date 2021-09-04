@@ -9,9 +9,9 @@ namespace ProEnade.API.Profiles
     {
         public ProfessorQuestoesProfile()
         {
-            CreateMap<ProfessorQuestoesRequest, ProfessorQuestoesEntity>().ReverseMap();
-            CreateMap<ProfessorQuestoesEntity, ProfessorQuestoesResponse>().ReverseMap();
-            CreateMap<ProfessorQuestoesUpdateRequest, ProfessorQuestoesEntity>().ReverseMap();
+            CreateMap<DisciplinaQuestoesRequest, DisciplinaQuestoesEntity>().ReverseMap();
+            CreateMap<DisciplinaQuestoesEntity, DisciplinaQuestoesResponse>().ReverseMap();
+            CreateMap<DisciplinaQuestoesUpdateRequest, DisciplinaQuestoesEntity>().ReverseMap();
         }
     }
 }

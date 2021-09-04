@@ -9,29 +9,29 @@ using ProEnade.API.Domain.Models.Response;
 
 namespace ProEnade.API.Business
 {
-    public class ProfessorQuestoesBL
+    public class DisciplinaQuestoesBL
     {
         private readonly IMapper _mapper;
-        private readonly ProfessorQuestoesRepository _professorQuestoesRepository;
+        private readonly DisciplinaQuestoesRepository _disciplinaQuestoesRepository;
 
-        public ProfessorQuestoesBL(IMapper mapper, ProfessorQuestoesRepository professorQuestoesRepository)
+        public DisciplinaQuestoesBL(IMapper mapper, DisciplinaQuestoesRepository disciplinaQuestoesRepository)
         {
             _mapper = mapper;
-            _professorQuestoesRepository = professorQuestoesRepository;
+            _disciplinaQuestoesRepository = disciplinaQuestoesRepository;
         }
 
-        public int Insert(ProfessorQuestoesRequest professorQuestoesRequest)
+        public int Insert(DisciplinaQuestoesRequest disciplinaQuestoesRequest)
         {
-            var professorQuestoesEntity = _mapper.Map<ProfessorQuestoesEntity>(professorQuestoesRequest);
-            var idProfessorQuestoes = _professorQuestoesRepository.Insert(professorQuestoesEntity);
+            var disciplinaQuestoesEntity = _mapper.Map<DisciplinaQuestoesEntity>(disciplinaQuestoesRequest);
+            var idDisciplinaQuestoes = _disciplinaQuestoesRepository.Insert(disciplinaQuestoesEntity);
 
-            return idProfessorQuestoes;
+            return idDisciplinaQuestoes;
         }
 
-        public int Update(ProfessorQuestoesUpdateRequest professorQuestoesUpdateRequest)
+        public int Update(DisciplinaQuestoesUpdateRequest professorQuestoesUpdateRequest)
         {
-            var professorQuestoesEntity = _mapper.Map<ProfessorQuestoesEntity>(professorQuestoesUpdateRequest);
-            var idProfessorQuestoes = _professorQuestoesRepository.Update(professorQuestoesEntity);
+            var professorQuestoesEntity = _mapper.Map<DisciplinaQuestoesEntity>(professorQuestoesUpdateRequest);
+            var idProfessorQuestoes = _disciplinaQuestoesRepository.Update(professorQuestoesEntity);
 
             if (idProfessorQuestoes == 0)
             {
@@ -40,24 +40,24 @@ namespace ProEnade.API.Business
 
             return idProfessorQuestoes;
         }
-        public ProfessorQuestoesResponse GetProfessorQuestoesById(int id)
+        public DisciplinaQuestoesResponse GetProfessorQuestoesById(int id)
         {
-            var professorQuestoesEntity = _professorQuestoesRepository.GetProfessorQuestoesById(id);
-            var professorQuestoesResponse = _mapper.Map<ProfessorQuestoesResponse>(professorQuestoesEntity);
+            var professorQuestoesEntity = _disciplinaQuestoesRepository.GetDisciplinaQuestoesById(id);
+            var professorQuestoesResponse = _mapper.Map<DisciplinaQuestoesResponse>(professorQuestoesEntity);
 
             return professorQuestoesResponse;
         }
-        public IEnumerable<ProfessorQuestoesResponse> GetAllProfessorQuestoesById(int id)
+        public IEnumerable<DisciplinaQuestoesResponse> GetAllProfessorQuestoesById(int id)
         {
-            var professorAlunoEntities = _professorQuestoesRepository.GetAllProfessorQuestoesById(id);
-            var professorAlunoResponse = professorAlunoEntities.Select(x => _mapper.Map<ProfessorQuestoesResponse>(x));
+            var professorAlunoEntities = _disciplinaQuestoesRepository.GetAllDisciplinaQuestoesById(id);
+            var professorAlunoResponse = professorAlunoEntities.Select(x => _mapper.Map<DisciplinaQuestoesResponse>(x));
 
             return professorAlunoResponse;
         }
 
         public int Delete(int id)
         {
-            var status = _professorQuestoesRepository.GetStatusProfessorQuestoesById(id);
+            var status = _disciplinaQuestoesRepository.GetStatusProfessorQuestoesById(id);
 
             if(status != 1)
             {
@@ -65,7 +65,7 @@ namespace ProEnade.API.Business
             }
             else
             {
-                var linhasAfetadas = _professorQuestoesRepository.Delete(id);
+                var linhasAfetadas = _disciplinaQuestoesRepository.Delete(id);
 
                 return linhasAfetadas;
             }
@@ -92,7 +92,7 @@ namespace ProEnade.API.Business
 
         private void VerificaSeProfessorQuestoesJaExistePorId(int id)
         {
-            var nome = _professorQuestoesRepository.GetProfessorQuestoesById(id);
+            var nome = _disciplinaQuestoesRepository.GetDisciplinaQuestoesById(id);
 
             if (nome != null)
             {
