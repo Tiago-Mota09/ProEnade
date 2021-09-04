@@ -36,6 +36,7 @@ namespace ProEnade.API
     public class Startup
     {
         public IConfiguration Configuration { get; }
+
         private readonly StartupValidator _startupValidator;
         private string ApplicationBasePath { get; }
         private string ApplicationName { get; }
@@ -82,6 +83,7 @@ namespace ProEnade.API
             services.AddScoped<IValidator<DisciplinaUpdateRequest>, DisciplinaUpdateValidator>();
             services.AddScoped<IValidator<ProfessorRequest>, ProfessorValidator>();
             services.AddScoped<IValidator<ProfessorUpdateRequest>, ProfessorUpdateValidator>();
+
             #endregion
 
             #region :: Acesso a Dados / Dapper ::
@@ -91,7 +93,9 @@ namespace ProEnade.API
             services.AddScoped<QuestoesRepository>();
 
             DefaultTypeMap.MatchNamesWithUnderscores = true;
-            //Dapper.SqlMapper.AddTypeMap(typeof(string), System.Data.DbType.AnsiString);
+
+            Dapper.SqlMapper.AddTypeMap(typeof(string), System.Data.DbType.AnsiString);
+
             #endregion
 
             #region :: Generic Classes ::
@@ -113,6 +117,7 @@ namespace ProEnade.API
           cfg.CreateMap<DisciplinaEntity, DisciplinaRepository>().ReverseMap();
           cfg.CreateMap<ProfessorEntity, ProfessorRepository>().ReverseMap();
           cfg.CreateMap<DisciplinaQuestoesEntity, ProfessorRepository>().ReverseMap();
+
           cfg.CreateMap<QuestoesEntity, QuestoesRepository>().ReverseMap();
       });
 
@@ -133,7 +138,9 @@ namespace ProEnade.API
             {
                 options.SwaggerDoc("v1",
                     new OpenApiInfo
-        {
+
+                    {
+
                         Title = "ProEnade",
                         Version = "v1",
                         Description = "API Template ProEnade",
