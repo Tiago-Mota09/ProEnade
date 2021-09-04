@@ -9,6 +9,7 @@ namespace ProEnade.API.Data.Entities
         public string NomeDisciplina { get; set; }
         public DateTime DataCadastro { get; set; }                                                                   
         public string Questao { get; set; }
+        public string Resposta { get; set; }
         public int Status { get; set; }
     }
 }

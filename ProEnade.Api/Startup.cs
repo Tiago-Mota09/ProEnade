@@ -86,7 +86,7 @@ namespace ProEnade.API
 
             #region :: Acesso a Dados / Dapper ::
             services.AddScoped<DisciplinaRepository>();
-            services.AddScoped<ProfessorQuestoesRepository>();
+            services.AddScoped<DisciplinaQuestoesRepository>();
             services.AddScoped<ProfessorRepository>();
             services.AddScoped<QuestoesRepository>();
 
@@ -103,7 +103,7 @@ namespace ProEnade.API
             services.AddTransient<CursosBL>();
             services.AddTransient<DisciplinaBL>();
             services.AddTransient<ProfessorBL>();
-            services.AddTransient<ProfessorQuestoesRepository>();
+            services.AddTransient<DisciplinaQuestoesRepository>();
             services.AddTransient<QuestoesBL>();
             #endregion
 
@@ -112,7 +112,7 @@ namespace ProEnade.API
       {
           cfg.CreateMap<DisciplinaEntity, DisciplinaRepository>().ReverseMap();
           cfg.CreateMap<ProfessorEntity, ProfessorRepository>().ReverseMap();
-          cfg.CreateMap<ProfessorQuestoesEntity, ProfessorRepository>().ReverseMap();
+          cfg.CreateMap<DisciplinaQuestoesEntity, ProfessorRepository>().ReverseMap();
           cfg.CreateMap<QuestoesEntity, QuestoesRepository>().ReverseMap();
       });
 
@@ -169,16 +169,16 @@ namespace ProEnade.API
             services.AddTransient<GenericExceptionHandling>();
             #endregion
 
-            //#region :: AppSettings ::
+            #region :: AppSettings ::
             //var appSettingsSection = Configuration.GetSection("AppSettings");
             //services.Configure<AppSettings>(appSettingsSection);
 
             //var appSettings = appSettingsSection.Get<AppSettings>();
 
             //_startupValidator.Validate(appSettings);
-            //#endregion
+            #endregion
 
-            //#region :: JWT / Token / Auth ::
+            #region :: JWT / Token / Auth ::
             //var signingConfigurations = new SigningConfigurations(appSettings.Secret);
             //services.AddSingleton(signingConfigurations);
 
@@ -227,7 +227,7 @@ namespace ProEnade.API
             //            .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
             //            .RequireAuthenticatedUser().Build());
             //});
-            //#endregion
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -8,10 +8,10 @@ using System.Collections.Generic;
 namespace ProEnade.API.Controllers
 {
     [Route("api/professoresQuestoes")]
-    public class ProfessorQuestoesController : ControllerBase
+    public class DisciplinaQuestoesController : ControllerBase
     {
-        private readonly ProfessorQuestoesBL _professorQuestoesBL;
-        public ProfessorQuestoesController(ProfessorQuestoesBL professorQuestoesBL)
+        private readonly DisciplinaQuestoesBL _professorQuestoesBL;
+        public DisciplinaQuestoesController(DisciplinaQuestoesBL professorQuestoesBL)
         {
             _professorQuestoesBL = professorQuestoesBL;
         }
@@ -25,7 +25,7 @@ namespace ProEnade.API.Controllers
         [Route("insert")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
-        public IActionResult Post([FromBody] ProfessorQuestoesRequest professorQuestoesReq)
+        public IActionResult Post([FromBody] DisciplinaQuestoesRequest professorQuestoesReq)
         {
             var idProfessorAluno = _professorQuestoesBL.Insert(professorQuestoesReq);
 
@@ -41,7 +41,7 @@ namespace ProEnade.API.Controllers
         [Route("update")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
-        public IActionResult Put([FromBody] ProfessorQuestoesUpdateRequest professorQuestoesUpdateRequest)
+        public IActionResult Put([FromBody] DisciplinaQuestoesUpdateRequest professorQuestoesUpdateRequest)
         {
             var linhasAfetadas = _professorQuestoesBL.Update(professorQuestoesUpdateRequest);
 
@@ -62,7 +62,7 @@ namespace ProEnade.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("getAll/{id}")]
-        [ProducesResponseType(typeof(IEnumerable<ProfessorQuestoesResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<DisciplinaQuestoesResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Response), StatusCodes.Status404NotFound)]
         public IActionResult GetAllById(int id)
         {
