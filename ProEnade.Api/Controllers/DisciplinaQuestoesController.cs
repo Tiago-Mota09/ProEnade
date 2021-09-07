@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace ProEnade.API.Controllers
 {
-    [Route("api/professoresQuestoes")]
+    [Route("api/disciplinaQuestoes")]
     public class DisciplinaQuestoesController : ControllerBase
     {
         private readonly DisciplinaQuestoesBL _professorQuestoesBL;

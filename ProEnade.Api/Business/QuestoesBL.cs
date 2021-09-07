@@ -26,7 +26,7 @@ namespace ProEnade.API.Business
             VerificaSeDisciplinaExiste(questoesRequest.IdDisciplina); //
 
             var questoesEntity = _mapper.Map<QuestoesEntity>(questoesRequest); //variável que terá retorno do banco e faz mapeamento com alunoEntity (variável que executa um metodo)
-            var idQuestoes = _questoesRepository.Insert(questoesEntity); // var que retorna o id do aluno
+            var idQuestoes = _questoesRepository.Insert(questoesEntity); // var que retorna o id dA QUESTÃO
 
             return idQuestoes;
         }

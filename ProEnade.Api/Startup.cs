@@ -76,6 +76,7 @@ namespace ProEnade.API
 
             #region :: FluentValidation ::
             services.AddMvc(options => { options.Filters.Add(typeof(ValidateModelAttribute)); }).AddFluentValidation();
+            services.AddScoped<IValidator<CursoRequest>, CursoValidator>();
             services.AddScoped<IValidator<QuestoesRequest>, QuestoesValidator>();
             services.AddScoped<IValidator<QuestoesUpdateRequest>, QuestoesUpdateValidator>();
             services.AddScoped<IValidator<DisciplinaRequest>, DisciplinaValidator>();
@@ -85,6 +86,7 @@ namespace ProEnade.API
             #endregion
 
             #region :: Acesso a Dados / Dapper ::
+            services.AddScoped<CursoRepository>();
             services.AddScoped<DisciplinaRepository>();
             services.AddScoped<DisciplinaQuestoesRepository>();
             services.AddScoped<ProfessorRepository>();
@@ -110,6 +112,7 @@ namespace ProEnade.API
             #region :: AutoMapper ::
             var config = new AutoMapper.MapperConfiguration(cfg =>
       {
+          cfg.CreateMap<CursoEntity, CursoRepository>().ReverseMap();
           cfg.CreateMap<DisciplinaEntity, DisciplinaRepository>().ReverseMap();
           cfg.CreateMap<ProfessorEntity, ProfessorRepository>().ReverseMap();
           cfg.CreateMap<DisciplinaQuestoesEntity, ProfessorRepository>().ReverseMap();
