@@ -24,10 +24,10 @@ namespace ProEnade.API.Business
         {
             VerificaSeDisciplinaExistePorNome(disciplinaRequest.NomeDisciplina);
 
-            var unidadeEntity = _mapper.Map<DisciplinaEntity>(disciplinaRequest);
-            var idUnidade = _disciplinaRepository.Insert(unidadeEntity);
+            var disciplinaEntity = _mapper.Map<DisciplinaEntity>(disciplinaRequest);
+            var idDisciplina = _disciplinaRepository.Insert(disciplinaEntity);
 
-            return idUnidade;
+            return idDisciplina;
         }
 
         public int Update(DisciplinaUpdateRequest disciplinaUpdateRequest)
@@ -73,7 +73,7 @@ namespace ProEnade.API.Business
             }
             else
             {
-                throw new Exception("Erro ao excluir a questão, contate o administrador");
+                throw new Exception("Erro ao excluir a disciplina, contate o administrador");
             }
         }
 

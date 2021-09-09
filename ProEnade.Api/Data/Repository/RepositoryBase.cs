@@ -13,6 +13,7 @@ namespace ProEnade.API.Data.Repositories
         {
             get
             {
+
                     var connect = new MySqlConnection(configuration["ConnectionString"]); //npgsqlConnection para instânciar uma conexão com banco
                
                     connect.Open(); //para abrir a coneção
