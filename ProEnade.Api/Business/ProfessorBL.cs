@@ -25,7 +25,7 @@ namespace ProEnade.API.Business
             VerificaSeProfessorJaExiste(professorRequest.NomeProfessor);
             VerificaSeUnidadeExiste(professorRequest.NomeDisciplina);
             ProfessorEntity professorEntity = new ProfessorEntity();
-             professorEntity = _mapper.Map<ProfessorEntity>(professorEntity);
+            professorEntity = _mapper.Map<ProfessorEntity>(professorEntity);
             var idProfessor = _professorRepository.Insert(professorEntity);
 
             return idProfessor;

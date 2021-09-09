@@ -17,7 +17,7 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            
+
             var query = @"INSERT INTO Professor
                             (IdProfessor,
                              NomeProfessor,
@@ -27,7 +27,7 @@ namespace ProEnade.API.Data.Repositories
                             values( 
                             @IdProfessor, 
                             @NomeProfessor,
-                            @DataNascimento,
+                            @Professor.DataNascimento,
                             @NomeDisciplina,
                             @Status);
                             ";
