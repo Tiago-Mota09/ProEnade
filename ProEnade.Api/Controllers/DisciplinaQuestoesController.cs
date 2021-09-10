@@ -4,6 +4,7 @@ using ProEnade.API.Domain.Models.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ProEnade.API.Controllers
 {
@@ -66,11 +67,11 @@ namespace ProEnade.API.Controllers
         [ProducesResponseType(typeof(Response), StatusCodes.Status404NotFound)]
         public IActionResult GetAllById(int id)
         {
-            var professorResponse = _disciplinaQuestoesBL.GetAllDisciplinaQuestoesById(id);
+            var disciplinaResponse = _disciplinaQuestoesBL.GetAllDisciplinaQuestoesById(id);
 
-            if (professorResponse != null)
+            if (disciplinaResponse != null)
             {
-                return Ok(professorResponse);
+                return Ok(disciplinaResponse);
             }
             else
             {
@@ -88,7 +89,7 @@ namespace ProEnade.API.Controllers
             }
             else
             {
-                return NotFound(new { message = "Nenhum relação entre professor e questão foi encontrada." });
+                return NotFound(new { message = "Nenhum relação entre disciplina e questão foi encontrada." });
             }
         }
 
@@ -115,7 +116,7 @@ namespace ProEnade.API.Controllers
         [ProducesResponseType(typeof(Response), StatusCodes.Status404NotFound)]
         public IActionResult GetAll()
         {
-            var disciplinaQuestoesResponse = _disciplinaQuestoesBL.GetAllDisciplinaQuestoes();
+            var disciplinaQuestoesResponse = _disciplinaQuestoesBL.GetAllDisciplinaQuestoesById();
 
             if (disciplinaQuestoesResponse.Any())
             {

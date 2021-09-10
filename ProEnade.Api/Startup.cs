@@ -75,17 +75,16 @@ namespace ProEnade.API
                 });
 
 
-            #region :: FluentValidation ::
-            services.AddMvc(options => { options.Filters.Add(typeof(ValidateModelAttribute)); }).AddFluentValidation();
-            services.AddScoped<IValidator<CursoRequest>, CursoValidator>();
-            services.AddScoped<IValidator<QuestoesRequest>, QuestoesValidator>();
-            services.AddScoped<IValidator<QuestoesUpdateRequest>, QuestoesUpdateValidator>();
-            services.AddScoped<IValidator<DisciplinaRequest>, DisciplinaValidator>();
-            services.AddScoped<IValidator<DisciplinaUpdateRequest>, DisciplinaUpdateValidator>();
-            services.AddScoped<IValidator<ProfessorRequest>, ProfessorValidator>();
-            services.AddScoped<IValidator<ProfessorUpdateRequest>, ProfessorUpdateValidator>();
-
-            #endregion
+            //#region :: FluentValidation ::
+            //services.AddMvc(options => { options.Filters.Add(typeof(ValidateModelAttribute)); }).AddFluentValidation();
+            //services.AddScoped<IValidator<CursoRequest>, CursoValidator>();
+            //services.AddScoped<IValidator<QuestoesRequest>, QuestoesValidator>();
+            //services.AddScoped<IValidator<QuestoesUpdateRequest>, QuestoesUpdateValidator>();
+            //services.AddScoped<IValidator<DisciplinaRequest>, DisciplinaValidator>();
+            //services.AddScoped<IValidator<DisciplinaUpdateRequest>, DisciplinaUpdateValidator>();
+            //services.AddScoped<IValidator<ProfessorRequest>, ProfessorValidator>();
+            //services.AddScoped<IValidator<ProfessorUpdateRequest>, ProfessorUpdateValidator>();
+            //#endregion
 
             #region :: Acesso a Dados / Dapper ::
             services.AddScoped<CursoRepository>();

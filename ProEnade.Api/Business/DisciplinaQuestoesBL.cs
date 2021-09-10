@@ -31,37 +31,37 @@ namespace ProEnade.API.Business
         public int Update(DisciplinaQuestoesUpdateRequest disciplinaQuestoesUpdateRequest)
         {
             var disciplinaQuestoesEntity = _mapper.Map<DisciplinaQuestoesEntity>(disciplinaQuestoesUpdateRequest);
-            var idProfessorQuestoes = _disciplinaQuestoesRepository.Update(disciplinaQuestoesEntity);
+            var idDisciplinaQuestoes = _disciplinaQuestoesRepository.Update(disciplinaQuestoesEntity);
 
-            if (idProfessorQuestoes == 0)
+            if (idDisciplinaQuestoes == 0)
             {
                 throw new Exception("Nenhuma referência entre disciplina e questão foi encontrada");
             }
 
-            return idProfessorQuestoes;
+            return idDisciplinaQuestoes;
         }
-        public DisciplinaQuestoesResponse GetProfessorQuestoesById(int id)
+        public DisciplinaQuestoesResponse GetDisciplinaQuestoesById(int id)
         {
-            var professorQuestoesEntity = _disciplinaQuestoesRepository.GetDisciplinaQuestoesById(id);
-            var professorQuestoesResponse = _mapper.Map<DisciplinaQuestoesResponse>(professorQuestoesEntity);
+            var disciplinaQuestoesEntity = _disciplinaQuestoesRepository.GetDisciplinaQuestoesById(id);
+            var disciplinaQuestoesResponse = _mapper.Map<DisciplinaQuestoesResponse>(disciplinaQuestoesEntity);
 
-            return professorQuestoesResponse;
+            return disciplinaQuestoesResponse;
         }
-        public IEnumerable<DisciplinaQuestoesResponse> GetAllProfessorQuestoesById(int id)
+        public IEnumerable<DisciplinaQuestoesResponse> GetAllDisciplinaQuestoesById(int id)
         {
-            var professorAlunoEntities = _disciplinaQuestoesRepository.GetAllDisciplinaQuestoesById(id);
-            var professorAlunoResponse = professorAlunoEntities.Select(x => _mapper.Map<DisciplinaQuestoesResponse>(x));
+            var disciplinaQuestoes = _disciplinaQuestoesRepository.GetAllDisciplinaQuestoesById(id);
+            var disciplinaQuestoesResponse = disciplinaQuestoesEntities.Select(x => _mapper.Map<DisciplinaQuestoesResponse>(x));
 
-            return professorAlunoResponse;
+            return disciplinaQuestoesResponse;
         }
 
         public int Delete(int id)
         {
-            var status = _disciplinaQuestoesRepository.GetStatusProfessorQuestoesById(id);
+            var status = _disciplinaQuestoesRepository.GetStatusDisciplinaQuestoesById(id);
 
             if(status != 1)
             {
-                throw new Exception("Nenhum relação entre professor e questão foi encontrada.");
+                throw new Exception("Nenhum relação entre disciplina e questão foi encontrada.");
             }
             else
             {
@@ -90,13 +90,13 @@ namespace ProEnade.API.Business
         //    }
         //}
 
-        private void VerificaSeProfessorQuestoesJaExistePorId(int id)
+        private void VerificaSeDisciplinaQuestoesJaExistePorId(int id)
         {
             var nome = _disciplinaQuestoesRepository.GetDisciplinaQuestoesById(id);
 
             if (nome != null)
             {
-                throw new Exception("Já existe um professor cadastrado com esse nome");
+                throw new Exception("Já existe um disciplina cadastrada com esse nome");
             }
         }
     }
