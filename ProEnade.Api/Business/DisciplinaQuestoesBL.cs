@@ -28,14 +28,14 @@ namespace ProEnade.API.Business
             return idDisciplinaQuestoes;
         }
 
-        public int Update(DisciplinaQuestoesUpdateRequest professorQuestoesUpdateRequest)
+        public int Update(DisciplinaQuestoesUpdateRequest disciplinaQuestoesUpdateRequest)
         {
-            var professorQuestoesEntity = _mapper.Map<DisciplinaQuestoesEntity>(professorQuestoesUpdateRequest);
-            var idProfessorQuestoes = _disciplinaQuestoesRepository.Update(professorQuestoesEntity);
+            var disciplinaQuestoesEntity = _mapper.Map<DisciplinaQuestoesEntity>(disciplinaQuestoesUpdateRequest);
+            var idProfessorQuestoes = _disciplinaQuestoesRepository.Update(disciplinaQuestoesEntity);
 
             if (idProfessorQuestoes == 0)
             {
-                throw new Exception("Nenhuma referência entre professor e questão foi encontrada");
+                throw new Exception("Nenhuma referência entre disciplina e questão foi encontrada");
             }
 
             return idProfessorQuestoes;
