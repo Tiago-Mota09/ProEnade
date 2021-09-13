@@ -32,7 +32,6 @@ namespace ProEnade.API
     {
         public IConfiguration Configuration { get; }
         //private readonly StartupValidator _startupValidator;
-        //private readonly StartupValidator _startupValidator;
         private string ApplicationBasePath { get; }
         private string ApplicationName { get; }
 
@@ -105,7 +104,7 @@ namespace ProEnade.API
             services.AddTransient<CursosBL>();
             services.AddTransient<DisciplinaBL>();
             services.AddTransient<ProfessorBL>();
-            services.AddTransient<ProfessorQuestoesRepository>();
+            services.AddTransient<DisciplinaQuestoesRepository>();
             services.AddTransient<QuestoesBL>();
             #endregion
             #region :: AutoMapper ::
@@ -162,7 +161,7 @@ namespace ProEnade.API
             //services.AddTransient<GenericExceptionHandling>();
             #endregion
 
-            //#region :: AppSettings ::
+            #region :: AppSettings ::
             //var appSettingsSection = Configuration.GetSection("AppSettings");
             //services.Configure<AppSettings>(appSettingsSection);
             //var appSettings = appSettingsSection.Get<AppSettings>();

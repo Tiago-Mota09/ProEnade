@@ -4,8 +4,8 @@ namespace ProEnade.API.Domain.Models.Response
 {
     public class QuestoesResponse
     {
-        public int IdQuestao { get; set; }
-        public int IdDisciplina { get; set; }
+        public int IdQuestoes { get; set; }
+        public string Dificuldade { get; set; }
         public string NomeDisciplina { get; set; }
         public string Dificuldade { get; set; }
         public DateTime DataCadastro { get; set; }

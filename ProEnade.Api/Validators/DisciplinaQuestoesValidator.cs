@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace ProEnade.API.Validators
 {
-    public class ProfessorQuestoesValidator : AbstractValidator<ProfessorQuestoesRequest>
+    public class DisciplinaQuestoesValidator : AbstractValidator<DisciplinaQuestoesRequest>
     {
-        public ProfessorQuestoesValidator()
+        public DisciplinaQuestoesValidator()
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;
 

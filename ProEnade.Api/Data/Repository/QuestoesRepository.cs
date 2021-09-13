@@ -16,6 +16,7 @@ namespace ProEnade.API.Data.Repositories
         }
         public int Insert(QuestoesEntity questoes) 
         {
+
             using var db = Connection;
 
         
@@ -34,8 +35,6 @@ namespace ProEnade.API.Data.Repositories
                              @Questao,
                              @RespostaQuestao,
                              @Status);";
-                           
-
             return db.ExecuteScalar<int>(query, new //ExecuteScalar retornar vários tipos de dados //new = instanciando algo novo
             //retorno para executar a query
             {
@@ -73,8 +72,7 @@ namespace ProEnade.API.Data.Repositories
         public QuestoesEntity GetQuestoesById(int id)
         {
             using var db = Connection;
-
-     
+    
             var query = @"SELECT idQuestao,
                               nomeDisciplina,
                               dataCadastro,
@@ -85,16 +83,16 @@ namespace ProEnade.API.Data.Repositories
 
             return db.QueryFirstOrDefault<QuestoesEntity>(query, new { id });//pra retornar a primeira entidade que achar ou null
         }
-        //public int GetStatusById(int idUnidade)
-        //{
-        //    using var db = Connection;
+        public int GetStatusByName(int idDisciplina)
+        {
+            using var db = Connection;
 
-        //    var query = @"SELECT  status
-        //                    FROM unidade
-        //                  WHERE id_unidade = @idUnidade";
+            var query = @"SELECT  status
+                            FROM Disciplina
+                          WHERE id_Disciplina = @idDisciplina";
 
-        //    return db.ExecuteScalar<int>(query, new { idUnidade });
-        //}
+            return db.ExecuteScalar<int>(query, new { idDisciplina });
+        }
         public int GetStatusDisciplinaById(int idDisciplina)
         {
             using var db = Connection;
