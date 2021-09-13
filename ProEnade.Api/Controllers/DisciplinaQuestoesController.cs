@@ -62,12 +62,12 @@ namespace ProEnade.API.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("getAll/{id}")]
+        [Route("get/{id}")]
         [ProducesResponseType(typeof(IEnumerable<DisciplinaQuestoesResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Response), StatusCodes.Status404NotFound)]
         public IActionResult GetAllById(int id)
         {
-            var disciplinaResponse = _disciplinaQuestoesBL.GetAllDisciplinaQuestoesById(id);
+            var disciplinaResponse = _disciplinaQuestoesBL.GetDisciplinaQuestoesById(id);
 
             if (disciplinaResponse != null)
             {
@@ -76,20 +76,6 @@ namespace ProEnade.API.Controllers
             else
             {
                 return NotFound(new Response { Message = "Nenhuma Questão foi encontrada para esse professor." });
-            }
-        }
-
-        private IActionResult Delete(int id)
-        {
-            var linhasAfetadas = _disciplinaQuestoesBL.Delete(id);
-
-            if (linhasAfetadas == 1)
-            {
-                return Ok(new { message = "Excluido com sucesso" });
-            }
-            else
-            {
-                return NotFound(new { message = "Nenhum relação entre disciplina e questão foi encontrada." });
             }
         }
 
@@ -116,7 +102,7 @@ namespace ProEnade.API.Controllers
         [ProducesResponseType(typeof(Response), StatusCodes.Status404NotFound)]
         public IActionResult GetAll()
         {
-            var disciplinaQuestoesResponse = _disciplinaQuestoesBL.GetAllDisciplinaQuestoesById();
+            var disciplinaQuestoesResponse = _disciplinaQuestoesBL.GetAllDisciplinaQuestoes();
 
             if (disciplinaQuestoesResponse.Any())
             {
@@ -143,11 +129,11 @@ namespace ProEnade.API.Controllers
 
             if (linhasAfetadas == 1) //ou if(aluno response !=0)
             {
-                return Ok(new Response { Message = "Questão excluida com sucesso" });
+                return Ok(new Response { Message = "Item excluido com sucesso" });
             }
             else
             {
-                return NotFound(new Response { Message = "Nenhuma questão foi encontrada." }); // ou return BadRequest(new Response{ Message = "Nenhum aluno foi encontrado." });
+                return NotFound(new Response { Message = "Nenhuma item foi encontrada." });
             }
         }
     }
