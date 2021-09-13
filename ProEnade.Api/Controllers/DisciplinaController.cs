@@ -32,11 +32,11 @@ namespace ProEnade.API.Controllers
         [Route("insert")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Post([FromBody] DisciplinaRequest unidadeReq)
+        public IActionResult Post([FromBody] DisciplinaRequest disciplinaReq)
         {
-            var idUnidade = _disciplinaBL.Insert(unidadeReq);
+            var idDisciplina = _disciplinaBL.Insert(disciplinaReq);
 
-            return CreatedAtAction(nameof(GetById), new { id = idUnidade }, unidadeReq);
+            return CreatedAtAction(nameof(GetById), new { id = idDisciplina }, disciplinaReq);
         }
 
         /// <summary>
@@ -48,9 +48,9 @@ namespace ProEnade.API.Controllers
         [Route("update")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
-        public IActionResult Put([FromBody] DisciplinaUpdateRequest unidadeUpdateRequest)
+        public IActionResult Put([FromBody] DisciplinaUpdateRequest disciplinaUpdateRequest)
         {
-            var linhasAfetadas = _disciplinaBL.Update(unidadeUpdateRequest);
+            var linhasAfetadas = _disciplinaBL.Update(disciplinaUpdateRequest);
 
             if (linhasAfetadas == 1)
             {
@@ -121,7 +121,7 @@ namespace ProEnade.API.Controllers
         {
             var linhasAfetadas = _disciplinaBL.Delete(id);
 
-            if (linhasAfetadas == 1)
+            if (linhasAfetadas != 1)
             {
                 return Ok(new { message = "Disciplina excluida com sucesso" });
             }

@@ -22,8 +22,9 @@ namespace ProEnade.API.Business
 
         public int InsertQuestoes(QuestoesRequest questoesRequest) //
         {
-            VerificaSeQuestoesJaExiste(questoesRequest.IdQuestoes ); //para não inserir uma questão, caso já exista
-            VerificaSeDisciplinaExiste(questoesRequest.IdDisciplina); //
+
+            VerificaSeQuestoesJaExiste(questoesRequest.IdQuestoes); //para não inserir uma questão, caso já exista
+            //VerificaSeDisciplinaExiste(questoesRequest.IdDisciplina); //
 
             var questoesEntity = _mapper.Map<QuestoesEntity>(questoesRequest); //variável que terá retorno do banco e faz mapeamento com alunoEntity (variável que executa um metodo)
             var idQuestoes = _questoesRepository.Insert(questoesEntity); // var que retorna o id do aluno
@@ -64,7 +65,7 @@ namespace ProEnade.API.Business
         {
             var questoesEntity = _questoesRepository.GetQuestoesById(id);
 
-            if(questoesEntity != null) //if(idQuestoes != null) 
+            if (questoesEntity != null) //if(idQuestoes != null) 
             {
                 var linhasAfetadas = _questoesRepository.Delete(id); //retrun _questoesRepository.Delete (id);
 
@@ -76,11 +77,11 @@ namespace ProEnade.API.Business
             }
         }
         private void VerificaSeDisciplinaExiste(int IdDisciplina) //void não retorna parâmetro 
-                                                            // int, pois no banco a unidade é referenciada com id na tabela aluno
+                                                                  // int, pois no banco a unidade é referenciada com id na tabela aluno
         {
             var status = _questoesRepository.GetStatusDisciplinaById(IdDisciplina);
 
-            if (status != 1)
+            if (status == 1)
             {
                 throw new Exception("A Disciplina informada não existe");
             }
@@ -89,7 +90,7 @@ namespace ProEnade.API.Business
         {
             var questao = _questoesRepository.GetByQuestao(idQuestao);
 
-            if (questao != "")
+            if (questao == "")
             {
                 //return Ok(new Response {Message = "Essa questão já existe"}
                 throw new Exception("Essa questão já existe"); //ou exception no lugar de Signa...

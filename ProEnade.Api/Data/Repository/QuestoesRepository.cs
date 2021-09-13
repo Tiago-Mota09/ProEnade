@@ -14,81 +14,71 @@ namespace ProEnade.API.Data.Repositories
         {
             base.configuration = configuration;
         }
-        public int Insert(QuestoesEntity questoes) //
+        public int Insert(QuestoesEntity questoes)
         {
-            using var db = Connection; //Para conectar ao banco
 
-            //metodo de insert a seguir:  //@ para poder pular linhas e reconhecer identação do banco //status não precisa, pois já vem com 1 como padrão
-            //1ª parte INSERT quais colunas será inserido valores
-            //2ª parte VALUES referenciando com a classe entity(Escrito igual no entity)
+            using var db = Connection;
+
 
             var query = @"INSERT INTO Questao           
-                            (idQuestao,
+                            (IdQuestao,
                              Dificuldade,
                              DataCadastro,
                              NomeDisciplina,
-                             Questão,
+                             Questao,
                              RespostaQuestao,
                              Status)
                      values( @IdQuestao, 
                              @Dificuldade,
                              @DataCadastro,
                              @NomeDisciplina,
-                             @RespostaQuestao)
-                             RETURNING idQuestao;";  //
-
+                             @Questao,
+                             @RespostaQuestao,
+                             @Status);";
             return db.ExecuteScalar<int>(query, new //ExecuteScalar retornar vários tipos de dados //new = instanciando algo novo
             //retorno para executar a query
             {
+                questoes.IdQuestao,
                 questoes.Dificuldade,
                 questoes.DataCadastro,
                 questoes.NomeDisciplina,
-                questoes.Resposta
+                questoes.Questao,
+                questoes.RespostaQuestao,
+                questoes.Status
             });
         }
         public int Update(QuestoesEntity questoes)
         {
             using var db = Connection;
 
-            var query = @"UPDATE questoes
+            var query = @"UPDATE questao
                             SET nomeDisciplina  = @NomeDisciplina,
                                 dificuldade = @Dificuldade,
-                                dataCadastro = @DataCadastro,
-                                idDisciplina = @IdDisciplina
-                            WHERE idQuestao = @IdQuestao AND status = 1;";
+                                Questao = @Questao,
+                                RespostaQuestao = @RespostaQuestao
+                            WHERE idQuestao = @IdQuestao 
+                            AND status = 1;";
 
             return db.Execute(query, new
             {
+                questoes.RespostaQuestao,
                 questoes.Dificuldade,
                 questoes.NomeDisciplina,
                 questoes.DataCadastro,
                 questoes.Questao,
-                questoes.IdQuestoes
+                questoes.IdQuestao
             });
         }
         public QuestoesEntity GetQuestoesById(int id)
         {
             using var db = Connection;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-            var query = @"SELECT id_questao,
-                              nome,
-=======
-            var query = @"SELECT idQuestoes,
+            var query = @"SELECT idQuestao,
                               nomeDisciplina,
->>>>>>> Tiago_Development
-=======
-
-            var query = @"SELECT id_questao,
-                              nome,
->>>>>>> Tiago_Development
-                              idade,
                               dataCadastro,
-                              status,
-                              idDisciplina
-                            FROM questoes
-                          WHERE idQuestoes = @idQuestoes
+                              status
+                              FROM Questao
+                          WHERE IdQuestao = @id
                              AND status = 1 ;";
 
             return db.QueryFirstOrDefault<QuestoesEntity>(query, new { id });//pra retornar a primeira entidade que achar ou null
@@ -118,21 +108,9 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"SELECT nome 
-<<<<<<< HEAD
-<<<<<<< HEAD
+            var query = @"SELECT nomeDisciplina 
                             FROM questao 
-                        WHERE id_questa = @id~Questao
-=======
-                            FROM aluno 
                         WHERE idQuestao = @idQuestao 
->>>>>>> Tiago_Development
-=======
-
-                            FROM questao 
-                        WHERE id_questa = @idQuestao
-
->>>>>>> Tiago_Development
                             AND status = 1;";
 
             return db.QueryFirstOrDefault<string>(query, new { idQuestao });
@@ -152,25 +130,26 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"SELECT * from questoes
+            var query = @"SELECT 
                              idQuestao,
-                             nomeDisciplina,
-                             dificuldade,
+                             dificuldade,                             
                              dataCadastro,
-                             status,
-                             id_Disciplina
-                        FROM questoes
+                             nomeDisciplina,
+                             questao,
+                             respostaQuestao,
+                             status
+                        FROM questao
                             WHERE status = 1; ";
 
             return db.Query<QuestoesEntity>(query);
-         }
+        }
         public int Delete(int id)
         {
-        using var db = Connection; 
+            using var db = Connection;
 
-        var query = @"UPDATE questoes      
+            var query = @"UPDATE questao      
                         SET status = 2
-                      WHERE idQuestao = @idQuestao";
+                      WHERE idQuestao = @id";
 
             return db.Execute(query, new { id });
         }

@@ -4,32 +4,33 @@ using ProEnade.API.Domain.Models.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ProEnade.API.Controllers
 {
-    [Route("api/professoresQuestoes")]
+    [Route("api/disciplinaQuestoes")]
     public class DisciplinaQuestoesController : ControllerBase
     {
-        private readonly DisciplinaQuestoesBL _professorQuestoesBL;
-        public DisciplinaQuestoesController(DisciplinaQuestoesBL professorQuestoesBL)
+        private readonly DisciplinaQuestoesBL _disciplinaQuestoesBL;
+        public DisciplinaQuestoesController(DisciplinaQuestoesBL disciplinaQuestoesBL)
         {
-            _professorQuestoesBL = professorQuestoesBL;
+            _disciplinaQuestoesBL = disciplinaQuestoesBL;
         }
 
         /// <summary>
         /// Cadastrar relação de professor e Questões
         /// </summary>
-        /// <param name="professorQuestoesReq"></param>
+        /// <param name="disciplinaQuestoesReq"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("insert")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
-        public IActionResult Post([FromBody] DisciplinaQuestoesRequest professorQuestoesReq)
+        public IActionResult Post([FromBody] DisciplinaQuestoesRequest disciplinaQuestoesReq)
         {
-            var idProfessorAluno = _professorQuestoesBL.Insert(professorQuestoesReq);
+            var idDisciplinaQuestoes = _disciplinaQuestoesBL.Insert(disciplinaQuestoesReq);
 
-            return CreatedAtAction(nameof(GetById), new { id = idProfessorAluno }, professorQuestoesReq);
+            return CreatedAtAction(nameof(GetById), new { id = idDisciplinaQuestoes }, disciplinaQuestoesReq);
         }
 
         /// <summary>
@@ -41,9 +42,9 @@ namespace ProEnade.API.Controllers
         [Route("update")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
-        public IActionResult Put([FromBody] DisciplinaQuestoesUpdateRequest professorQuestoesUpdateRequest)
+        public IActionResult Put([FromBody] DisciplinaQuestoesUpdateRequest disciplinaQuestoesUpdateRequest)
         {
-            var linhasAfetadas = _professorQuestoesBL.Update(professorQuestoesUpdateRequest);
+            var linhasAfetadas = _disciplinaQuestoesBL.Update(disciplinaQuestoesUpdateRequest);
 
             if (linhasAfetadas == 1)
             {
@@ -51,7 +52,7 @@ namespace ProEnade.API.Controllers
             }
             else
             {
-                return BadRequest(new { message = "Erro ao atualizar o a relação entre professor e Questoes, contate o administrador" });
+                return BadRequest(new { message = "Erro ao atualizar o a relação entre disciplina e Questoes, contate o administrador" });
             }
         }
 
@@ -61,16 +62,16 @@ namespace ProEnade.API.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("getAll/{id}")]
+        [Route("get/{id}")]
         [ProducesResponseType(typeof(IEnumerable<DisciplinaQuestoesResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Response), StatusCodes.Status404NotFound)]
         public IActionResult GetAllById(int id)
         {
-            var professorResponse = _professorQuestoesBL.GetAllProfessorQuestoesById(id);
+            var disciplinaResponse = _disciplinaQuestoesBL.GetDisciplinaQuestoesById(id);
 
-            if (professorResponse != null)
+            if (disciplinaResponse != null)
             {
-                return Ok(professorResponse);
+                return Ok(disciplinaResponse);
             }
             else
             {
@@ -78,31 +79,61 @@ namespace ProEnade.API.Controllers
             }
         }
 
-        private IActionResult Delete(int id)
+        private IActionResult GetById(int id)
         {
-            var linhasAfetadas = _professorQuestoesBL.Delete(id);
+            var disciplinaQuestoesResponse = _disciplinaQuestoesBL.GetDisciplinaQuestoesById(id);
 
-            if (linhasAfetadas == 1)
+            if (disciplinaQuestoesResponse != null)
             {
-                return Ok(new { message = "Excluido com sucesso" });
+                return Ok(disciplinaQuestoesResponse);
             }
             else
             {
-                return NotFound(new { message = "Nenhum relação entre professor e questão foi encontrada." });
+                return NotFound(new { message = "Nenhuma Relação entre disciplina e questão foi encontrada." });
+            }
+        }
+        /// <summary>
+        /// Busca todos as Questões
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("getAll")]
+        [ProducesResponseType(typeof(IEnumerable<QuestoesResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status404NotFound)]
+        public IActionResult GetAll()
+        {
+            var disciplinaQuestoesResponse = _disciplinaQuestoesBL.GetAllDisciplinaQuestoes();
+
+            if (disciplinaQuestoesResponse.Any())
+            {
+                return Ok(disciplinaQuestoesResponse);
+            }
+            else
+            {
+                return NotFound(new Response { Message = "Erro, contate o administrador" });//pode fazer retorno pela response ou retorno pelo sistema sem colocar o Response
             }
         }
 
-        private IActionResult GetById(int id)
+        /// <summary>
+        /// Deleta as Questões por ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("delete/{id}")]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status404NotFound)]
+        public IActionResult Delete(int id)
         {
-            var professorQuestoesResponse = _professorQuestoesBL.GetProfessorQuestoesById(id);
+            var linhasAfetadas = _disciplinaQuestoesBL.Delete(id);
 
-            if (professorQuestoesResponse != null)
+            if (linhasAfetadas == 1) //ou if(aluno response !=0)
             {
-                return Ok(professorQuestoesResponse);
+                return Ok(new Response { Message = "Item excluido com sucesso" });
             }
             else
             {
-                return NotFound(new { message = "Nenhuma Relação entre professor e questão foi encontrada." });
+                return NotFound(new Response { Message = "Nenhuma item foi encontrada." });
             }
         }
     }

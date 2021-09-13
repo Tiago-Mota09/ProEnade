@@ -30,7 +30,7 @@ namespace ProEnade.API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public IActionResult Post([FromBody] QuestoesRequest questoesReq) //IActionResult - (retorna qualquer tipo de resultado)
-                                                                    //FROMBODY - recebe um objeto do tipo alunoRequest - um corpo de dados
+                                                                          //FROMBODY - recebe um objeto do tipo alunoRequest - um corpo de dados
         {
             var idAluno = _questoesBL.InsertQuestoes(questoesReq); //chamar o metodo que fara a inserção no banco de dados, no caso a regra de negocio alunoBL
 
@@ -55,15 +55,15 @@ namespace ProEnade.API.Controllers
             //}
             var linhasAfetadas = _questoesBL.Update(questoesUpdateRequest);
 
-            if (questoesUpdateRequest.IdQuestoes == 1)
+            if (questoesUpdateRequest.IdQuestoes != 1)
             {
                 return Ok(new Response { Message = "Questão atualizada com sucesso." }); //Message retorna da classe response
             }
-           
+
             else
             {
                 return BadRequest(new { message = "Erro ao atualizar o cadastro de questões, contate o administrador." });//message retorna direto do sistema
-            }                                                            
+            }
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace ProEnade.API.Controllers
         {
             var questoesResponse = _questoesBL.GetAllQuestoes();
 
-            if (questoesResponse.Any ())
+            if (questoesResponse.Any())
             {
                 return Ok(questoesResponse);
             }
@@ -130,7 +130,7 @@ namespace ProEnade.API.Controllers
             }
             else
             {
-                return NotFound(new Response{ Message = "Nenhuma questão foi encontrada." }); // ou return BadRequest(new Response{ Message = "Nenhum aluno foi encontrado." });
+                return NotFound(new Response { Message = "Nenhuma questão foi encontrada." }); // ou return BadRequest(new Response{ Message = "Nenhum aluno foi encontrado." });
             }
         }
     }

@@ -43,32 +43,17 @@ namespace ProEnade.API.Data.Repositories
             });
         }
 
-        //public DisciplinaQuestoesEntity GetDisciplinaQuestoes(int idDisciplinaQuestoes)
-        //{
-        //    using var db = Connection;
+        public int GetStatusDisciplinaById(int idDisciplinaQuestoes)
+        {
+            using var db = Connection;
 
-        //    var query = @"SELECT idDisciplinaQuestoes, 
-        //                     nome,
-        //                     status, 
-        //                     id_unidade
-        //                     FROM DisciplinaQuestoes
-        //                  WHERE idDisciplinaQuestoes = @idDisciplinaQuestoes
-        //                     AND status = 1;";
+            var query = @"SELECT  status
+                            FROM disciplinaQuestoes
+                          WHERE idDisciplinaQuestoes = @idDisciplinaQuestoes
+                            AND status = 1;";
 
-        //    return db.QueryFirstOrDefault<DisciplinaQuestoesEntity>(query, new { idDisciplinaQuestoes });
-        //}
-
-        //public int GetStatusDisciplinaById(int idDisciplina)
-        //{
-        //    using var db = Connection;
-
-        //    var query = @"SELECT  status
-        //                    FROM unidade
-        //                  WHERE id_unidade = @idUnidade
-        //                    AND status = 1;";
-
-        //    return db.ExecuteScalar<int>(query, new { idDisciplina });
-        //}
+            return db.ExecuteScalar<int>(query, new { idDisciplinaQuestoes });
+        }
 
         public IEnumerable<DisciplinaQuestoesEntity> GetAllDisciplinaQuestoesById(int idDisciplina)
         {
@@ -122,28 +107,26 @@ namespace ProEnade.API.Data.Repositories
 
         //    return db.ExecuteScalar<int>(query, new { nome });
         //}
-        //public IEnumerable<DisciplinaQuestoesEntity> GetAllDisciplinaQuestoes()
-        //{
-        //    using var db = Connection;
+        public IEnumerable<DisciplinaQuestoesEntity> GetAllDisciplinaQuestoes()
+        {
+            using var db = Connection;
 
-        //    var query = @"Select idDisciplinaQuestoes, 
-        //                  nome, 
-        //                  idade, 
-        //                  data_nascimento, 
-        //                  status, 
-        //                  id_unidade
-        //              From professor_Questoes 
-        //                Where status = 1; ";
+            var query = @"Select idDisciplinaQuestoes, 
+                          nomeDisciplina, 
+                          dificuldade, 
+                          status
+                      From disciplinaQuestoes 
+                        Where status = 1; ";
 
-        //    return db.Query<DisciplinaQuestoesEntity>(query);
-        //}
+            return db.Query<DisciplinaQuestoesEntity>(query);
+        }
         public int Delete(int id)
         {
             using var db = Connection;
 
             var query = @"UPDATE DisciplinaQuestoes
                         SET status = 2
-                      WHERE idDisciplinaQuestoes= @id";
+                      WHERE idDisciplinaQuestoes= @idDisciplinaQuestoes";
 
             return db.Execute(query, new { id });
         }
