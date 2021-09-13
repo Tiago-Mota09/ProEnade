@@ -2,6 +2,6 @@
 {
     public class QuestoesUpdateRequest : QuestoesRequest
     {
-        public int IdQuestoes { get; set; }
+        public int IdQuestao { get; set; }
     }
 }

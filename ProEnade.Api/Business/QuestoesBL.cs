@@ -22,8 +22,9 @@ namespace ProEnade.API.Business
 
         public int InsertQuestoes(QuestoesRequest questoesRequest) //
         {
-            VerificaSeQuestoesJaExiste(questoesRequest.IdQuestoes ); //para não inserir uma questão, caso já exista
-            VerificaSeDisciplinaExiste(questoesRequest.IdDisciplina); //
+
+            VerificaSeQuestoesJaExiste(questoesRequest.IdQuestao ); //para não inserir uma questão, caso já exista
+            //VerificaSeDisciplinaExiste(questoesRequest.IdDisciplina); //
 
             var questoesEntity = _mapper.Map<QuestoesEntity>(questoesRequest); //variável que terá retorno do banco e faz mapeamento com alunoEntity (variável que executa um metodo)
             var idQuestoes = _questoesRepository.Insert(questoesEntity); // var que retorna o id do aluno
@@ -32,7 +33,7 @@ namespace ProEnade.API.Business
         }
         public int Update(QuestoesUpdateRequest questoesUpdateRequest)
         {
-            var questoes = _questoesRepository.GetQuestoesById(questoesUpdateRequest.IdQuestoes); //para saber qual é o Id do aluno
+            var questoes = _questoesRepository.GetQuestoesById(questoesUpdateRequest.IdQuestao); //para saber qual é o Id do aluno
 
             if (questoes == null) //if (string.IsNullOrWhiteSpace(nome)
             {
@@ -80,7 +81,7 @@ namespace ProEnade.API.Business
         {
             var status = _questoesRepository.GetStatusDisciplinaById(IdDisciplina);
 
-            if (status != 1)
+            if (status == 1)
             {
                 throw new Exception("A Disciplina informada não existe");
             }
@@ -89,7 +90,7 @@ namespace ProEnade.API.Business
         {
             var questao = _questoesRepository.GetByQuestao(idQuestao);
 
-            if (questao != "")
+            if (questao == "")
             {
                 //return Ok(new Response {Message = "Essa questão já existe"}
                 throw new Exception("Essa questão já existe"); //ou exception no lugar de Signa...
