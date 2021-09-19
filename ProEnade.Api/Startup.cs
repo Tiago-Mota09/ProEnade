@@ -1,5 +1,4 @@
 using AutoMapper;
-using Catel.Data;
 using Dapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -159,13 +158,15 @@ namespace ProEnade.API
                         Contact = new OpenApiContact
                         {
                             Name = "Team ProEnade 4°B",
-                            Url = new Uri("https://trello.com/b/evXPotRy/proenade")
+                            Url = new Uri("https://trello.com/b/evXPotRy/proenade%22")
                         }
                     });
 
                 options.AddSecurityDefinition(
                     "Bearer",
                     new OpenApiSecurityScheme
+
+                    {
                         In = ParameterLocation.Header,
                         Description = "Autenticação baseada em Json Web Token (JWT)",
                         Name = "Authorization",
