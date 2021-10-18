@@ -19,13 +19,19 @@ namespace ProEnade.API.Data.Repositories
             using var db = Connection;
 
             var query = @"INSERT INTO Curso
-                            (nomeCurso,
+                            (
                              idCurso,
+                             nomeCurso,
                              status)
-                            values( 
-                            @NomeCurso, 
-                            @IdCurso)
-                            RETURNING idCurso;";
+                            values(  
+                            @IdCurso,
+                            @NomeCurso,
+                            @Status);";
+<<<<<<< HEAD
+
+=======
+                            
+>>>>>>> c9dfabc1adf91d231f976c33953aa0a9f005d64c
 
             return db.ExecuteScalar<int>(query, new
             {
@@ -62,7 +68,7 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"UPDATE nomeCurso
+            var query = @"UPDATE Curso
                             SET nomeCurso = @NomeCurso
                          WHERE idCurso = @IdCurso AND status = 1";
 

@@ -16,7 +16,6 @@ namespace ProEnade.API.Data.Repositories
         public int Insert(ProfessorEntity professor)
         {
             using var db = Connection;
-
             
             var query = @"INSERT INTO Professor
                             (IdProfessor,
@@ -34,9 +33,15 @@ namespace ProEnade.API.Data.Repositories
 
             return db.ExecuteScalar<int>(query, new
             {
+<<<<<<< HEAD
+
+=======
+    
+>>>>>>> c9dfabc1adf91d231f976c33953aa0a9f005d64c
                 professor.NomeProfessor,
                 professor.DataNascimento,
-                professor.NomeDisciplina
+                professor.NomeDisciplina,
+                professor.Status
 
             });
         }
@@ -45,8 +50,7 @@ namespace ProEnade.API.Data.Repositories
             using var db = Connection;
 
             var query = @"UPDATE Professor
-                            SET nome = @Nome,
-                                idade = @Idade,
+                            SET nomeProfessor = @NomeProfessor,
                                 idprofessor = @Idprofessor,
                                 datanascimento = @DataNascimento
                           WHERE idprofessor = @IdProfessor AND status = 1;";
@@ -67,13 +71,15 @@ namespace ProEnade.API.Data.Repositories
 
             var query = @"SELECT idprofessor, 
                              nomeprofessor,
-                             idade,
                              datanascimento,
                              status, 
                              idprofessor
                             FROM professor
                           WHERE idprofessor = @idProfessor
+<<<<<<< HEAD
+=======
 
+>>>>>>> c9dfabc1adf91d231f976c33953aa0a9f005d64c
                              AND status = 1;";
 
             return db.QueryFirstOrDefault<ProfessorEntity>(query, new { idProfessor });
@@ -95,9 +101,9 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"SELECT nome 
+            var query = @"SELECT nomeProfessor 
                             FROM Professor 
-                        WHERE idprofessor = @idProfessor;
+                        WHERE idprofessor = @idProfessor
                             AND status = 1;";
 
             return db.ExecuteScalar<string>(query, new { idProfessor });
@@ -109,9 +115,13 @@ namespace ProEnade.API.Data.Repositories
 
             var query = @"select idprofessor 
 	                        from professor
+<<<<<<< HEAD
+                        where nomeprofessor = @Nome
+=======
 
                         where nomeprofessor = @Nome
 
+>>>>>>> c9dfabc1adf91d231f976c33953aa0a9f005d64c
 	                        AND status = 1";
 
             return db.ExecuteScalar<int>(query, new { nomeProfessor });
@@ -123,12 +133,14 @@ namespace ProEnade.API.Data.Repositories
 
             var query = @"Select idprofessor, 
 	                         nomeprofessor, 
-	                         idade, 
 	                         datanascimento, 
 	                         status, 
 	                         idprofessor,
                            nomeDisciplina
+<<<<<<< HEAD
+=======
 
+>>>>>>> c9dfabc1adf91d231f976c33953aa0a9f005d64c
 	                     From professor 
 		                      Where status = 1; ";
 
@@ -140,7 +152,7 @@ namespace ProEnade.API.Data.Repositories
 
             var query = @"UPDATE Professor 
                         SET status = 2
-                      WHERE idprofessor = @idProfessor";
+                      WHERE idprofessor = @id";
 
             return db.Execute(query, new { id });
         }
