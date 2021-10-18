@@ -22,11 +22,11 @@ namespace ProEnade.API.Business
 
         public int InsertQuestoes(QuestoesRequest questoesRequest) //
         {
-            VerificaSeQuestoesJaExiste(questoesRequest.IdQuestao ); //para não inserir uma questão, caso já exista
+            VerificaSeQuestoesJaExiste(questoesRequest.IdQuestoes ); //para não inserir uma questão, caso já exista
             VerificaSeDisciplinaExiste(questoesRequest.IdDisciplina); //
 
             var questoesEntity = _mapper.Map<QuestoesEntity>(questoesRequest); //variável que terá retorno do banco e faz mapeamento com alunoEntity (variável que executa um metodo)
-            var idQuestoes = _questoesRepository.Insert(questoesEntity); // var que retorna o id do aluno
+            var idQuestoes = _questoesRepository.Insert(questoesEntity); // var que retorna o id dA QUESTÃO
 
             return idQuestoes;
         }
@@ -75,10 +75,10 @@ namespace ProEnade.API.Business
                 throw new Exception("Erro ao excluir a questão, contate o administrador");
             }
         }
-        private void VerificaSeDisciplinaExiste(int idDisciplina) //void não retorna parâmetro 
+        private void VerificaSeDisciplinaExiste(int IdDisciplina) //void não retorna parâmetro 
                                                             // int, pois no banco a unidade é referenciada com id na tabela aluno
         {
-            var status = _questoesRepository.GetStatusDisciplinaById(idDisciplina);
+            var status = _questoesRepository.GetStatusDisciplinaById(IdDisciplina);
 
             if (status != 1)
             {

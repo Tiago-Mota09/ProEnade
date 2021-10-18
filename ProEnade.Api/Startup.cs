@@ -36,17 +36,20 @@ namespace ProEnade.API
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        //private readonly StartupValidator _startupValidator;
-        //private string ApplicationBasePath { get; }
-        //private string ApplicationName { get; }
 
-        public Startup(IConfiguration configuration)
+        private readonly StartupValidator _startupValidator;
+        private string ApplicationBasePath { get; }
+        private string ApplicationName { get; }
+
+        public Startup(
+            IConfiguration configuration,
+            IWebHostEnvironment env)
         {
             Configuration = configuration;
-            //ApplicationBasePath = env.ContentRootPath;
-            //ApplicationName = env.ApplicationName;
-            //Global.ConnectionString = Configuration["DATABASE_CONNECTION"];
-            //_startupValidator = new StartupValidator();
+            ApplicationBasePath = env.ContentRootPath;
+            ApplicationName = env.ApplicationName;
+            Global.ConnectionString = Configuration["DATABASE_CONNECTION"];
+            _startupValidator = new StartupValidator();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -71,24 +74,29 @@ namespace ProEnade.API
                     options.SerializerSettings.Converters = new List<JsonConverter> { new DecimalConverter() };
                 });
 
-            #region :: FluentValidation ::
-            services.AddMvc(options => { options.Filters.Add(typeof(ValidateModelAttribute)); }).AddFluentValidation();
-            services.AddScoped<IValidator<QuestoesRequest>, QuestoesValidator>();
-            services.AddScoped<IValidator<QuestoesUpdateRequest>, QuestoesUpdateValidator>();
-            services.AddScoped<IValidator<DisciplinaRequest>, DisciplinaValidator>();
-            services.AddScoped<IValidator<DisciplinaUpdateRequest>, DisciplinaUpdateValidator>();
-            services.AddScoped<IValidator<ProfessorRequest>, ProfessorValidator>();
-            services.AddScoped<IValidator<ProfessorUpdateRequest>, ProfessorUpdateValidator>();
-            #endregion
+
+            //#region :: FluentValidation ::
+            //services.AddMvc(options => { options.Filters.Add(typeof(ValidateModelAttribute)); }).AddFluentValidation();
+            //services.AddScoped<IValidator<CursoRequest>, CursoValidator>();
+            //services.AddScoped<IValidator<QuestoesRequest>, QuestoesValidator>();
+            //services.AddScoped<IValidator<QuestoesUpdateRequest>, QuestoesUpdateValidator>();
+            //services.AddScoped<IValidator<DisciplinaRequest>, DisciplinaValidator>();
+            //services.AddScoped<IValidator<DisciplinaUpdateRequest>, DisciplinaUpdateValidator>();
+            //services.AddScoped<IValidator<ProfessorRequest>, ProfessorValidator>();
+            //services.AddScoped<IValidator<ProfessorUpdateRequest>, ProfessorUpdateValidator>();
+            //#endregion
 
             #region :: Acesso a Dados / Dapper ::
+            services.AddScoped<CursoRepository>();
             services.AddScoped<DisciplinaRepository>();
-            services.AddScoped<ProfessorQuestoesRepository>();
+            services.AddScoped<DisciplinaQuestoesRepository>();
             services.AddScoped<ProfessorRepository>();
             services.AddScoped<QuestoesRepository>();
 
             DefaultTypeMap.MatchNamesWithUnderscores = true;
-            //Dapper.SqlMapper.AddTypeMap(typeof(string), System.Data.DbType.AnsiString);
+
+            Dapper.SqlMapper.AddTypeMap(typeof(string), System.Data.DbType.AnsiString);
+
             #endregion
 
             #region :: Generic Classes ::
@@ -96,18 +104,22 @@ namespace ProEnade.API
             #endregion
 
             #region :: Business ::
+
+            services.AddTransient<CursosBL>();
             services.AddTransient<DisciplinaBL>();
             services.AddTransient<ProfessorBL>();
-            services.AddTransient<ProfessorQuestoesRepository>();
+            services.AddTransient<DisciplinaQuestoesRepository>();
             services.AddTransient<QuestoesBL>();
             #endregion
 
             #region :: AutoMapper ::
             var config = new AutoMapper.MapperConfiguration(cfg =>
       {
+          cfg.CreateMap<CursoEntity, CursoRepository>().ReverseMap();
           cfg.CreateMap<DisciplinaEntity, DisciplinaRepository>().ReverseMap();
           cfg.CreateMap<ProfessorEntity, ProfessorRepository>().ReverseMap();
-          cfg.CreateMap<ProfessorQuestoesEntity, ProfessorRepository>().ReverseMap();
+          cfg.CreateMap<DisciplinaQuestoesEntity, ProfessorRepository>().ReverseMap();
+
           cfg.CreateMap<QuestoesEntity, QuestoesRepository>().ReverseMap();
       });
 
@@ -128,7 +140,9 @@ namespace ProEnade.API
             {
                 options.SwaggerDoc("v1",
                     new OpenApiInfo
+
                     {
+
                         Title = "ProEnade",
                         Version = "v1",
                         Description = "API Template ProEnade",
@@ -142,6 +156,7 @@ namespace ProEnade.API
                 options.AddSecurityDefinition(
                     "Bearer",
                     new OpenApiSecurityScheme
+
                     {
                         In = ParameterLocation.Header,
                         Description = "Autenticação baseada em Json Web Token (JWT)",
@@ -163,16 +178,16 @@ namespace ProEnade.API
             services.AddTransient<GenericExceptionHandling>();
             #endregion
 
-            //#region :: AppSettings ::
+            #region :: AppSettings ::
             //var appSettingsSection = Configuration.GetSection("AppSettings");
             //services.Configure<AppSettings>(appSettingsSection);
 
             //var appSettings = appSettingsSection.Get<AppSettings>();
 
             //_startupValidator.Validate(appSettings);
-            //#endregion
+            #endregion
 
-            //#region :: JWT / Token / Auth ::
+            #region :: JWT / Token / Auth ::
             //var signingConfigurations = new SigningConfigurations(appSettings.Secret);
             //services.AddSingleton(signingConfigurations);
 
@@ -221,7 +236,7 @@ namespace ProEnade.API
             //            .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
             //            .RequireAuthenticatedUser().Build());
             //});
-            //#endregion
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

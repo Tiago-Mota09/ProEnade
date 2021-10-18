@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ProEnade.API.Domain.Models.Request
 {
-    public class ProfessorQuestoesUpdateRequest : ProfessorQuestoesRequest
+    public class DisciplinaQuestoesUpdateRequest : DisciplinaQuestoesRequest
     {
         public int? IdProfessorQuestoes{ get; set; }
         public object IdQuestoes { get; set; }
