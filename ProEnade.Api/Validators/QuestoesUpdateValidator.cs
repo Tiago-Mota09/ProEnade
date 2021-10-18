@@ -9,7 +9,7 @@ namespace ProEnade.API.Validators
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;
 
-            RuleFor(x => x.IdQuestoes)
+            RuleFor(x => x.IdQuestao)
                .NotNull().WithMessage("Informe o Id")//Não pode ser nulo
                .NotEmpty().WithMessage("informe o Id")//não pode vazio
                .GreaterThan(0).WithMessage("Informe o ID") //Não pode zero

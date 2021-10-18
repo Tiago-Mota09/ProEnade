@@ -27,7 +27,11 @@ namespace ProEnade.API.Data.Repositories
                             @IdCurso,
                             @NomeCurso,
                             @Status);";
+<<<<<<< HEAD
 
+=======
+                            
+>>>>>>> c9dfabc1adf91d231f976c33953aa0a9f005d64c
 
             return db.ExecuteScalar<int>(query, new
             {

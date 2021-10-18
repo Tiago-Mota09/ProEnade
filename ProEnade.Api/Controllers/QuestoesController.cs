@@ -32,7 +32,7 @@ namespace ProEnade.API.Controllers
         public IActionResult Post([FromBody] QuestoesRequest questoesReq) //IActionResult - (retorna qualquer tipo de resultado)
                                                                           //FROMBODY - recebe um objeto do tipo alunoRequest - um corpo de dados
         {
-            var idAluno = _questoesBL.InsertQuestoes(questoesReq); //chamar o metodo que fara a inserção no banco de dados, no caso a regra de negocio alunoBL
+            var idQuestoes = _questoesBL.InsertQuestoes(questoesReq); //chamar o metodo que fara a inserção no banco de dados, no caso a regra de negocio alunoBL
 
             //return CreatedAtAction(nameof(GetById), new { id= idAluno}, alunoReq);
             return Ok(new Response { Message = "Questão cadastrada com sucesso." });
@@ -55,7 +55,11 @@ namespace ProEnade.API.Controllers
             //}
             var linhasAfetadas = _questoesBL.Update(questoesUpdateRequest);
 
+<<<<<<< HEAD
             if (questoesUpdateRequest.IdQuestoes != 1)
+=======
+            if (questoesUpdateRequest.IdQuestao != 1)
+>>>>>>> c9dfabc1adf91d231f976c33953aa0a9f005d64c
             {
                 return Ok(new Response { Message = "Questão atualizada com sucesso." }); //Message retorna da classe response
             }

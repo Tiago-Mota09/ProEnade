@@ -14,12 +14,20 @@ namespace ProEnade.API.Data.Repositories
         {
             base.configuration = configuration;
         }
+<<<<<<< HEAD
         public int Insert(QuestoesEntity questoes)
         {
 
             using var db = Connection;
 
+=======
+        public int Insert(QuestoesEntity questoes) 
+        {
 
+            using var db = Connection;
+>>>>>>> c9dfabc1adf91d231f976c33953aa0a9f005d64c
+
+        
             var query = @"INSERT INTO Questao           
                             (IdQuestao,
                              Dificuldade,
@@ -41,7 +49,11 @@ namespace ProEnade.API.Data.Repositories
                 questoes.IdQuestao,
                 questoes.Dificuldade,
                 questoes.DataCadastro,
+<<<<<<< HEAD
                 questoes.NomeDisciplina,
+=======
+                questoes.NomeDisciplina,   
+>>>>>>> c9dfabc1adf91d231f976c33953aa0a9f005d64c
                 questoes.Questao,
                 questoes.RespostaQuestao,
                 questoes.Status
@@ -72,7 +84,11 @@ namespace ProEnade.API.Data.Repositories
         public QuestoesEntity GetQuestoesById(int id)
         {
             using var db = Connection;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> c9dfabc1adf91d231f976c33953aa0a9f005d64c
             var query = @"SELECT idQuestao,
                               nomeDisciplina,
                               dataCadastro,
@@ -147,7 +163,11 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
+<<<<<<< HEAD
             var query = @"UPDATE questao      
+=======
+        var query = @"UPDATE questao      
+>>>>>>> c9dfabc1adf91d231f976c33953aa0a9f005d64c
                         SET status = 2
                       WHERE idQuestao = @id";
 

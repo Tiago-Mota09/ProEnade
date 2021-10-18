@@ -23,17 +23,21 @@ namespace ProEnade.API.Business
         public int InsertQuestoes(QuestoesRequest questoesRequest) //
         {
 
+<<<<<<< HEAD
             VerificaSeQuestoesJaExiste(questoesRequest.IdQuestoes); //para não inserir uma questão, caso já exista
+=======
+            VerificaSeQuestoesJaExiste(questoesRequest.IdQuestao ); //para não inserir uma questão, caso já exista
+>>>>>>> c9dfabc1adf91d231f976c33953aa0a9f005d64c
             //VerificaSeDisciplinaExiste(questoesRequest.IdDisciplina); //
 
             var questoesEntity = _mapper.Map<QuestoesEntity>(questoesRequest); //variável que terá retorno do banco e faz mapeamento com alunoEntity (variável que executa um metodo)
-            var idQuestoes = _questoesRepository.Insert(questoesEntity); // var que retorna o id do aluno
+            var idQuestoes = _questoesRepository.Insert(questoesEntity); // var que retorna o id dA QUESTÃO
 
             return idQuestoes;
         }
         public int Update(QuestoesUpdateRequest questoesUpdateRequest)
         {
-            var questoes = _questoesRepository.GetQuestoesById(questoesUpdateRequest.IdQuestoes); //para saber qual é o Id do aluno
+            var questoes = _questoesRepository.GetQuestoesById(questoesUpdateRequest.IdQuestao); //para saber qual é o Id do aluno
 
             if (questoes == null) //if (string.IsNullOrWhiteSpace(nome)
             {

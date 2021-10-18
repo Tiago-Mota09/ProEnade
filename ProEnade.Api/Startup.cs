@@ -72,9 +72,17 @@ namespace ProEnade.API
                 {
                     options.SerializerSettings.Formatting = Formatting.Indented;
                     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+<<<<<<< HEAD
                     //  options.SerializerSettings.Converters = new List<JsonConverter> { new DecimalConverter() };
                 });
 
+=======
+
+              //  options.SerializerSettings.Converters = new List<JsonConverter> { new DecimalConverter() };
+          });
+
+     
+>>>>>>> c9dfabc1adf91d231f976c33953aa0a9f005d64c
 
             //#region :: FluentValidation ::
             //services.AddMvc(options => { options.Filters.Add(typeof(ValidateModelAttribute)); }).AddFluentValidation();
@@ -84,7 +92,11 @@ namespace ProEnade.API
             //services.AddScoped<IValidator<DisciplinaRequest>, DisciplinaValidator>();
             //services.AddScoped<IValidator<ProfessorRequest>, ProfessorValidator>();
             //services.AddScoped<IValidator<ProfessorUpdateRequest>, ProfessorUpdateValidator>();
+<<<<<<< HEAD
             // #endregion
+=======
+           // #endregion
+>>>>>>> c9dfabc1adf91d231f976c33953aa0a9f005d64c
             #region :: Acesso a Dados / Dapper ::
             services.AddTransient<CursoRepository>();
             services.AddTransient<DisciplinaRepository>();
@@ -117,6 +129,10 @@ namespace ProEnade.API
             //});
             //IMapper mapper = config.CreateMapper();
             //services.AddSingleton(mapper);
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9dfabc1adf91d231f976c33953aa0a9f005d64c
             services.AddAutoMapper(typeof(Startup));
             services.AddAutoMapper(new Action<IMapperConfigurationExpression>(x => { }), typeof(Startup));
             #endregion
@@ -205,7 +221,7 @@ namespace ProEnade.API
             //            .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
             //            .RequireAuthenticatedUser().Build());
             //});
-            #endregion
+            //#endregion
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
