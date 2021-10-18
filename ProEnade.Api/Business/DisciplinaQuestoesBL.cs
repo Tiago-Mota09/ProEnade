@@ -28,78 +28,68 @@ namespace ProEnade.API.Business
             return idDisciplinaQuestoes;
         }
 
-        public int Update(DisciplinaQuestoesUpdateRequest professorQuestoesUpdateRequest)
+        public int Update(DisciplinaQuestoesUpdateRequest disciplinaQuestoesUpdateRequest)
         {
-            var professorQuestoesEntity = _mapper.Map<DisciplinaQuestoesEntity>(professorQuestoesUpdateRequest);
-            var idProfessorQuestoes = _disciplinaQuestoesRepository.Update(professorQuestoesEntity);
+            var disciplinaQuestoesEntity = _mapper.Map<DisciplinaQuestoesEntity>(disciplinaQuestoesUpdateRequest);
+            var idDisciplinaQuestoes = _disciplinaQuestoesRepository.Update(disciplinaQuestoesEntity);
 
-            if (idProfessorQuestoes == 0)
+            if (idDisciplinaQuestoes == 0)
             {
-                throw new Exception("Nenhuma referência entre professor e questão foi encontrada");
+                throw new Exception("Nenhuma referência entre disciplina e questão foi encontrada");
             }
 
-            return idProfessorQuestoes;
+            return idDisciplinaQuestoes;
         }
-        public DisciplinaQuestoesResponse GetProfessorQuestoesById(int id)
+        public DisciplinaQuestoesResponse GetDisciplinaQuestoesById(int id)
         {
-            var professorQuestoesEntity = _disciplinaQuestoesRepository.GetDisciplinaQuestoesById(id);
-            var professorQuestoesResponse = _mapper.Map<DisciplinaQuestoesResponse>(professorQuestoesEntity);
+            var disciplinaQuestoesEntity = _disciplinaQuestoesRepository.GetAllDisciplinaQuestoesById(id);
+            var disciplinaQuestoesResponse = _mapper.Map<DisciplinaQuestoesResponse>(disciplinaQuestoesEntity);
 
-            return professorQuestoesResponse;
+            return disciplinaQuestoesResponse;
         }
-        public IEnumerable<DisciplinaQuestoesResponse> GetAllProfessorQuestoesById(int id)
+        public IEnumerable<DisciplinaQuestoesResponse> GetAllDisciplinaQuestoes()
         {
-            var professorAlunoEntities = _disciplinaQuestoesRepository.GetAllDisciplinaQuestoesById(id);
-            var professorAlunoResponse = professorAlunoEntities.Select(x => _mapper.Map<DisciplinaQuestoesResponse>(x));
+            var disciplinaQuestoesEntities = _disciplinaQuestoesRepository.GetAllDisciplinaQuestoes();
+            var disciplinaQuestoesResponse = disciplinaQuestoesEntities.Select(x => _mapper.Map<DisciplinaQuestoesResponse>(x));
 
-            return professorAlunoResponse;
+            return disciplinaQuestoesResponse;
         }
 
         public int Delete(int id)
         {
-            var status = _disciplinaQuestoesRepository.GetStatusProfessorQuestoesById(id);
+            var disciplinaQuestoesEntity = _disciplinaQuestoesRepository.GetDisciplinaQuestoesById(id);
 
-            if(status != 1)
-            {
-                throw new Exception("Nenhum relação entre professor e questão foi encontrada.");
-            }
-            else
+            if (disciplinaQuestoesEntity != null) //if(idQuestoes != null) 
             {
                 var linhasAfetadas = _disciplinaQuestoesRepository.Delete(id);
 
                 return linhasAfetadas;
             }
+            else
+            {
+                throw new Exception("Erro ao excluir, contate o administrador");
+            }
         }
 
-        //private void VerificaSDisciplinaExiste(int idUnidade)
+        //private void VerificaSeDisciplinaQuestoesJaExiste(int idDisciplinaQuestoes)
         //{
-        //    var status = _professorQuestoesRepository.GetProfessorQuestoesById();
+        //    var status = _disciplinaQuestoesRepository.GetAllDisciplinaQuestoesById(idDisciplinaQuestoes);
 
         //    if (status != 1)
         //    {
-        //        throw new SignaRegraNegocioException("A Unidade informada não existe");
-        //    }
-        //}
-        //private void VerificaSeProfessorAlunoJaExiste(string nome)
-        //{
-        //    var id = _professorAlunoRepository.GetProfessorAlunoById(nome);
-
-        //    if (id != 0)
-        //    {
-        //        throw new SignaRegraNegocioException("Já existe um professor cadastrado com esse nome");
+        //        throw new Exception("O item informado não existe");
         //    }
         //}
 
-        private void VerificaSeProfessorQuestoesJaExistePorId(int id)
+
+        private void VerificaSeDisciplinaQuestoesJaExistePorId(int id)
         {
             var nome = _disciplinaQuestoesRepository.GetDisciplinaQuestoesById(id);
 
             if (nome != null)
             {
-                throw new Exception("Já existe um professor cadastrado com esse nome");
+                throw new Exception("Já existe um disciplina cadastrada com esse nome");
             }
         }
     }
 }
-    
-

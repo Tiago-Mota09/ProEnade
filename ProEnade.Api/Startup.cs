@@ -72,10 +72,12 @@ namespace ProEnade.API
                 {
                     options.SerializerSettings.Formatting = Formatting.Indented;
                     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+
               //  options.SerializerSettings.Converters = new List<JsonConverter> { new DecimalConverter() };
           });
 
-           
+     
+
             //#region :: FluentValidation ::
             //services.AddMvc(options => { options.Filters.Add(typeof(ValidateModelAttribute)); }).AddFluentValidation();
             //services.AddScoped<IValidator<CursoRequest>, CursoValidator>();
@@ -91,6 +93,7 @@ namespace ProEnade.API
             services.AddTransient<ProfessorQuestoesRepository>();
             services.AddTransient<ProfessorRepository>();
             services.AddTransient<QuestoesRepository>();
+
             DefaultTypeMap.MatchNamesWithUnderscores = true;
             Dapper.SqlMapper.AddTypeMap(typeof(string), System.Data.DbType.AnsiString);
             #endregion
@@ -117,6 +120,7 @@ namespace ProEnade.API
             //});
             //IMapper mapper = config.CreateMapper();
             //services.AddSingleton(mapper);
+
             services.AddAutoMapper(typeof(Startup));
             services.AddAutoMapper(new Action<IMapperConfigurationExpression>(x => { }), typeof(Startup));
             #endregion

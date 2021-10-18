@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace ProEnade.API.Controllers
 {
-    [Route("api/Curso")]
+    [Route("api/cursos")]
     public class CursoController : ControllerBase
     {
         private readonly CursosBL _cursosBL;
