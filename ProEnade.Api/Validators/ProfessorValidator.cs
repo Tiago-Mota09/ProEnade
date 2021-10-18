@@ -16,7 +16,7 @@ namespace ProEnade.API.Validators
 
                 .DependentRules(() =>
                 {
-                           RuleFor(x => x.IdDisciplina)
+                           RuleFor(x => x.NomeDisciplina)
                                 .NotNull().WithMessage("Informe o Id")
                                 .NotEmpty().WithMessage("informe o Id")
                                 .GreaterThan(0).WithMessage("Informe o ID");

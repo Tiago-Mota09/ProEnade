@@ -22,8 +22,8 @@ namespace ProEnade.API.Data.Repositories
                             values( 
                             @NomeDisciplina, 
                             @IdDisciplina,
-                            @Status)
-                            RETURNING idDisciplina;";
+                            @Status);";
+                  
 
             return db.ExecuteScalar<int>(query, new
             {
@@ -60,7 +60,7 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"UPDATE nomeDisciplina 
+            var query = @"UPDATE Disciplina 
                             SET nomeDisciplina = @NomeDisciplina
                          WHERE idDisciplina = @IdDisciplina AND status = 1";
 
@@ -75,7 +75,7 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"SELECT id_disciplina,
+            var query = @"SELECT iddisciplina,
                                  nomeDisciplina,
 		                         status
                                FROM disciplina
@@ -101,9 +101,10 @@ namespace ProEnade.API.Data.Repositories
         {
             using var db = Connection;
 
-            var query = @"SELECT idDisciplina
+
+            var query = @"SELECT iddisciplina
                             FROM disciplina
-                          WHERE nomeDisciplina = @NomeDisciplina
+                          WHERE nomedisciplina = @NomeDisciplina
                             AND status = 1; ";
 
             return db.ExecuteScalar<int>(query, new { nomeDisciplina });
@@ -114,9 +115,9 @@ namespace ProEnade.API.Data.Repositories
 
             var query = @"UPDATE disciplina
                         SET status = 2
-                      WHERE idDisciplina = @IdDisciplina";
+                      WHERE idDisciplina = @Id";
 
-            return db.Execute(query, new { id });
+            return db.ExecuteScalar<int>(query, new { id });
         }
     }
 }

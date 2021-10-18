@@ -55,7 +55,7 @@ namespace ProEnade.API.Controllers
             //}
             var linhasAfetadas = _questoesBL.Update(questoesUpdateRequest);
 
-            if (questoesUpdateRequest.IdQuestoes == 1)
+            if (questoesUpdateRequest.IdQuestao != 1)
             {
                 return Ok(new Response { Message = "Questão atualizada com sucesso." }); //Message retorna da classe response
             }

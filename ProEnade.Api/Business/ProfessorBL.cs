@@ -23,8 +23,9 @@ namespace ProEnade.API.Business
         public int Insert(ProfessorRequest professorRequest)
         {
             VerificaSeProfessorJaExiste(professorRequest.NomeProfessor);
-            VerificaSeUnidadeExiste(professorRequest.IdDisciplina);
-
+            //VerificaSeUnidadeExiste(professorRequest.NomeDisciplina);
+            
+            //ProfessorEntity professorEntity = new ProfessorEntity();
             var professorEntity = _mapper.Map<ProfessorEntity>(professorRequest);
             var idProfessor = _professorRepository.Insert(professorEntity);
 
@@ -40,7 +41,7 @@ namespace ProEnade.API.Business
                 throw new Exception("Nenhum professor foi encontrado");
             }
 
-            VerificaSeUnidadeExiste(professorUpdateRequest.IdDisciplina);
+            //VerificaSeUnidadeExiste(professorUpdateRequest.NomeDisciplina);
 
             var professorEntity = _mapper.Map<ProfessorEntity>(professorUpdateRequest);
             var linhasafetadas = _professorRepository.Update(professorEntity);
@@ -78,20 +79,20 @@ namespace ProEnade.API.Business
             }
         }
 
-        private void VerificaSeUnidadeExiste(int idUnidade)
-        {
-            var status = _professorRepository.GetStatusUnidadeById(idUnidade);
+        //private void VerificaSeUnidadeExiste(int idProfessor)
+        //{
+        //    var status = _professorRepository.GetStatusUnidadeById(idProfessor);
 
-            if (status != 1)
-            {
-                throw new Exception("A Unidade informada não existe");
-            }
-        }
+        //    if (status == 1)
+        //    {
+        //        throw new Exception("A Unidade informada não existe");
+        //    }
+        //}
         private void VerificaSeProfessorJaExiste(string nome)
         {
             var id = _professorRepository.GetIdByNome(nome);
 
-            if (id != 0)
+            if (id == 1)
             {
                 throw new Exception("Já existe um professor cadastrado com esse nome");
             }

@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using ProEnade.API.Business;
 using ProEnade.API.Domain.Models.Request;
 using ProEnade.API.Domain.Models.Response;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ProEnade.API.Controllers
 {
@@ -70,11 +68,11 @@ namespace ProEnade.API.Controllers
         [ProducesResponseType(typeof(Response), StatusCodes.Status404NotFound)]
         public IActionResult GetById(int id)
         {
-            var disciplinaResponse = _cursosBL.GetCursoById(id);
+            var cursoResponse = _cursosBL.GetCursoById(id);
 
-            if (disciplinaResponse != null)
+            if (cursoResponse != null)
             {
-                return Ok(disciplinaResponse);
+                return Ok(cursoResponse);
             }
             else
             {
